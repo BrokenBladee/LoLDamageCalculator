@@ -1,0 +1,229 @@
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+
+}
+
+header {
+    padding: 0.6rem 0.6rem 0.6rem 2.5rem;
+    background-color: #6bbbee;
+    box-shadow: 0 0.8rem 1.6rem 0 rgba(0, 0, 0, 0.2);
+    font-size: 1.6rem;
+}
+
+.main-container {
+   /* background: grey;*/
+    display: grid;
+    padding: 0 15rem;
+    grid-template-columns: 1.5fr 1.5fr 1fr;
+    column-gap: 1rem;
+    align-items: start;
+}
+
+.champion-container {
+    /*background: #639ea0;*/
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+}
+
+.dropbtn {
+    margin: 1rem 0 0 0;
+    background-color: #76bbbd;
+    color: Black;
+    padding: 1.2rem;
+    font-size: 1.6rem;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0.8rem 1.6rem 0 rgba(0, 0, 0, 0.2);
+
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #639ea0;
+}
+
+.dropdown {
+    align-self: center;
+    justify-self: center;
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    font-size: 1.6rem;
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 16rem;
+    box-shadow: 0 0.8rem 1.6rem 0 rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content p:hover {
+    background-color: #ddd
+}
+
+.dropdown-content p {
+    margin: 0;
+    color: black;
+    padding: 1.2rem 1.6rem;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+
+}
+
+.items {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.5rem;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.items p {
+    background: grey;
+    font-size: 2rem;
+    padding: 1rem;
+    box-shadow: 0 0.8rem 1.6rem 0 rgba(0, 0, 0, 0.2);
+}
+
+
+.level {
+
+    align-self: center;
+    justify-self: center;
+}
+
+.level p {
+    background: aqua;
+    font-size: 2.5rem;
+    box-shadow: 0 0.8rem 1.6rem 0 rgba(0, 0, 0, 0.2);
+}
+
+.spells {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-self: center;
+    justify-self: center;
+    gap: 3rem;
+}
+
+.spells p {
+    background: black;
+    font-size: 2rem;
+    color: wheat;
+    padding: 1rem;
+    box-shadow: 0 0.8rem 1.6rem 0 rgba(0, 0, 0, 0.2);
+}
+
+.stats-page {
+    display: block;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    background-color: orange;
+    padding: 0.6rem;
+    margin: 1rem;
+    min-width: 16rem;
+    box-shadow: 0 0.8rem 1.6rem 0 rgba(0, 0, 0, 0.2);
+    font-size: 1.6rem;
+}
+
+.wrapper {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.first {
+    float: left;
+    margin: 0.5rem 0.4rem 0.5rem 0.5rem;
+}
+
+.second {
+    display: none;
+    float: left;
+    margin: 0.5rem 0 0.5rem 0.5rem;
+}
+
+.runes {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    align-self: center;
+    justify-self: center;
+
+}
+
+.runes p {
+    font-size: 3rem;
+    background: azure;
+    box-shadow: 0 0.8rem 1.6rem 0 rgba(0, 0, 0, 0.2);
+}
+
+
+
+.abilities-container {
+   /* background: #76bbbd;*/
+    display: grid;
+}
+
+.abilities-container h2 {
+    align-self: center;
+    justify-self: center;
+    font-size: 3rem;
+    margin: 2.5rem 0 0 0;
+}
+
+.list-of-abilities {
+    font-size: 4rem;
+    align-self: center;
+    justify-self: center;
+    margin: 2.5rem 0 0 0;
+}
+
+.list-of-abilities li {
+    background: azure;
+    padding: 0.3rem;
+    border: black 0.1rem solid;
+    box-shadow: 0 0.8rem 1.6rem 0 rgba(0, 0, 0, 0.2);
+
+}
+
+
+
+.dummy-container {
+    display: grid;
+    /*background: aliceblue;*/
+    font-size: 2.5rem;
+}
+
+.dummy {
+    align-self: center;
+    justify-self: center;
+}
+
+.dummy p {
+    background: aquamarine;
+    box-shadow: 0 0.8rem 1.6rem 0 rgba(0, 0, 0, 0.2);
+}
+
+.damage {
+    align-self: center;
+    justify-self: center;
+}
+
+.damage p {
+    background: beige;
+    box-shadow: 0 0.8rem 1.6rem 0 rgba(0, 0, 0, 0.2);
+}
+
+.show {
+    display: block;
+}
