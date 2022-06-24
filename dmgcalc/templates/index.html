@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,103 +5,805 @@
     <meta charset="UTF-8">
     <title>DMGCalc</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
-    <script src="{% static 'app.js' %}"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
           rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>
-            League of Legends Calculator
-        </h1>
-    </header>
+<header>
+    <h1>
+        League of Legends Calculator
+    </h1>
+</header>
 
 
-
-    <div class="main-container">
-        <div class="champion-container">
+<div class="main-container">
+    <div class="champion-container">
+        <div class="dropdown">
+            <button onclick="dropdownChamp()" class="champ-button">Select Champion</button>
+            <div id="dropdownChampionList" class="dropdown-content-champion">
+                <button onclick="chosenChamp(0)"
+                        id="champion_number_0">{{ all_champions.0.champion_name }}</button>
+                <button onclick="chosenChamp(1)"
+                        id="champion_number_1">{{ all_champions.1.champion_name }}</button>
+                <button onclick="chosenChamp(2)"
+                        id="champion_number_2">{{ all_champions.2.champion_name }}</button>
+                <button onclick="chosenChamp(3)"
+                        id="champion_number_3">{{ all_champions.3.champion_name }}</button>
+            </div>
+        </div>
+        <div class="items">
             <div class="dropdown">
-                <button onclick="dropDownChamp()" class="dropbtn">Select Champion</button>
-                <div id="dropdownChampionList" class="dropdown-content">
-                    {% for row in all_items %}
-                        <p onclick="chosenChamp()">{{ row.championName }}</p>
-                    {% endfor %}
+                <button onclick="dropdownItems(1)" class="item-buttons">1</button>
+                <div id="dropdownItemList-1" class="dropdown-content-item">
+                    <button onclick="chosenItem(1,0)">{{ all_items.0.item_name }}</button>
+                    <button onclick="chosenItem(1,1)">{{ all_items.1.item_name }}</button>
                 </div>
             </div>
-            <div class="items">
-                <p class="each-item">1</p>
-                <p class="each-item">2</p>
-                <p class="each-item">3</p>
-                <p class="each-item">4</p>
-                <p class="each-item">5</p>
-                <p class="each-item">6</p>
+            <div class="dropdown">
+                <button onclick="dropdownItems(2)" class="item-buttons">2</button>
+                <div id="dropdownItemList-2" class="dropdown-content-item">
+                    <button onclick="chosenItem(2,0)">{{ all_items.0.item_name }}</button>
+                    <button onclick="chosenItem(2,1)">{{ all_items.1.item_name }}</button>
+                </div>
             </div>
-
-            <div class="level">
-                    <p>Level</p>
+            <div class="dropdown">
+                <button onclick="dropdownItems(3)" class="item-buttons">3</button>
+                <div id="dropdownItemList-3" class="dropdown-content-item">
+                    <button onclick="chosenItem(3,0)">{{ all_items.0.item_name }}</button>
+                    <button onclick="chosenItem(3,1)">{{ all_items.1.item_name }}</button>
+                </div>
             </div>
-            <div class="spells">
-                <p>Q</p>
-                <p>W</p>
-                <p>E</p>
-                <p>R</p>
+            <div class="dropdown">
+                <button onclick="dropdownItems(4)" class="item-buttons">4</button>
+                <div id="dropdownItemList-4" class="dropdown-content-item">
+                    <button onclick="chosenItem(4,0)">{{ all_items.0.item_name }}</button>
+                    <button onclick="chosenItem(4,1)">{{ all_items.1.item_name }}</button>
+                </div>
             </div>
-            <div class="stats-page">
-                <div class="wrapper">
-                    <h3 class="second" id="champion_stats">{{ all_items.0.championName }}</h3>
-                    <h3 class="first" >Stats</h3>
+            <div class="dropdown">
+                <button onclick="dropdownItems(5)" class="item-buttons">5</button>
+                <div id="dropdownItemList-5" class="dropdown-content-item">
+                    <button onclick="chosenItem(5,0)">{{ all_items.0.item_name }}</button>
+                    <button onclick="chosenItem(5,1)">{{ all_items.1.item_name }}</button>
                 </div>
-                <div class="wrapper">
-                    <p class="first">Attack Damage:</p>
-                    <p class="second" id="champion_stats1">{{ all_items.0.attack_damage }}</p>
-                </div>
-                <div class="wrapper">
-                    <p class="first">Armor:</p>
-                    <p class="second" id="champion_stats2">{{ all_items.0.armour }}</p>
-                </div>
-                <div class="wrapper">
-                    <p class="first">Magic Resistance:</p>
-                    <p class="second" id="champion_stats3">{{ all_items.0.magic_resistance }}</p>
-                </div>
-                <div class="wrapper">
-                    <p class="first">Health Points:</p>
-                    <p class="second" id="champion_stats4">{{ all_items.0.health_points }}</p>
+            </div>
+            <div class="dropdown">
+                <button onclick="dropdownItems(6)" class="item-buttons">6</button>
+                <div id="dropdownItemList-6" class="dropdown-content-item">
+                    <button onclick="chosenItem(6,0)">{{ all_items.0.item_name }}</button>
+                    <button onclick="chosenItem(6,1)">{{ all_items.1.item_name }}</button>
                 </div>
             </div>
 
-            <div class="runes">
-                <p>Runes</p>
+        </div>
+
+        <div class="level">
+            <label for="inputForLevel">Level:</label><input
+                type="number" minlength="1"
+                maxlength="2" id="inputForLevel"
+                value="1">
+        </div>
+
+        <div class="spells">
+            <div class="spell-input">
+                <label for="input-for-spell-q">Q</label><input type="number" id="input-for-spell-q">
+            </div>
+            <div class="spell-input">
+                <label for="input-for-spell-q">W</label><input type="number" id="input-for-spell-w">
+            </div>
+            <div class="spell-input">
+                <label for="input-for-spell-q">E</label><input type="number" id="input-for-spell-e">
+            </div>
+            <div class="spell-input">
+                <label for="input-for-spell-q">R</label><input type="number" id="input-for-spell-r">
             </div>
         </div>
 
-        <div class="abilities-container">
-            <h2>Choose Abilities to Use:</h2>
-            <ol class="list-of-abilities">
-                <li>Ability1</li>
-                <li>Ability2</li>
-                <li>Ability3</li>
-                <li>Ability4</li>
-                <li>Ability5</li>
-                <li>Ability6</li>
-            </ol>
+        <div class="stats-page">
+            <div class="wrapper">
+                <h3 class="second"
+                    id="champion_stats">-</h3>
+                <h3 class="first">Stats</h3>
+            </div>
+            <div class="wrapper">
+                <p class="first">Attack Damage:</p>
+                <p class="second"
+                   id="champion_stats1">-</p>
+            </div>
+            <div class="wrapper">
+                <p class="first">Armor:</p>
+                <p class="second"
+                   id="champion_stats2">-</p>
+            </div>
+            <div class="wrapper">
+                <p class="first">Magic Resistance:</p>
+                <p class="second"
+                   id="champion_stats3">-</p>
+            </div>
+            <div class="wrapper">
+                <p class="first">Health Points:</p>
+                <p class="second"
+                   id="champion_stats4">-</p>
+            </div>
         </div>
 
-        <div class="dummy-container">
-            <div class="dummy">
-                <p>Health</p>
-                <p>Armor</p>
-                <p>Magic Resistance</p>
+        <div class="runes">
+            <div class="dropdown">
+                <button onclick="dropdownRunes(1)" class="rune-buttons">Keystone</button>
+                <div id="dropdown-rune-keystone" class="dropdown-content-rune">
+                    <button onclick="chosenRune(1,0)">Press the Attack</button>
+                    <button onclick="chosenRune(1,1)">Lethal Tempo</button>
+                    <button onclick="chosenRune(1,2)">Fleet Footwork</button>
+                    <button onclick="chosenRune(1,3)">Conqueror</button>
+                </div>
             </div>
-            <div class="damage">
-                <p>Physical Damage</p>
-                <p>Magical Damage</p>
-                <p>True Damage</p>
+            <div class="dropdown">
+                <button onclick="dropdownRunes(2)" class="rune-buttons">Primary1</button>
+                <div id="dropdown-rune-primary1" class="dropdown-content-rune">
+                    <button onclick="chosenRune(2,0)">Overheal</button>
+                    <button onclick="chosenRune(2,1)">Triumph</button>
+                    <button onclick="chosenRune(2,2)">Presence of Mind</button>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button onclick="dropdownRunes(3)" class="rune-buttons">Primary2</button>
+                <div id="dropdown-rune-primary2" class="dropdown-content-rune">
+                    <button onclick="chosenRune(3,0)">Legend: Alacrity</button>
+                    <button onclick="chosenRune(3,1)">Legend: Tenacity</button>
+                    <button onclick="chosenRune(3,2)">Legend: Bloodline</button>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button onclick="dropdownRunes(4)" class="rune-buttons">Primary3</button>
+                <div id="dropdown-rune-primary3" class="dropdown-content-rune">
+                    <button onclick="chosenRune(4,0)">Coup de Grace</button>
+                    <button onclick="chosenRune(4,1)">Cut Down</button>
+                    <button onclick="chosenRune(4,2)">Last Stand</button>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button onclick="dropdownRunes(5)" class="rune-buttons">Secondary1</button>
+                <div id="dropdown-rune-secondary1" class="dropdown-content-rune">
+                    <button onclick="chosenRune(5,0)">Conditioning</button>
+                    <button onclick="chosenRune(5,1)">Second Wind</button>
+                    <button onclick="chosenRune(5,2)">Bone Plating</button>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button onclick="dropdownRunes(6)" class="rune-buttons">Secondary2</button>
+                <div id="dropdown-rune-secondary2" class="dropdown-content-rune">
+                    <button onclick="chosenRune(6,0)">Overgrowth</button>
+                    <button onclick="chosenRune(6,1)">Revitalize</button>
+                    <button onclick="chosenRune(6,2)">Unflinching</button>
+                </div>
             </div>
         </div>
-
     </div>
 
+    <div class="abilities-container">
+        <h2>Choose Abilities to Use:</h2>
+        <ol class="list-of-abilities">
+            <li>
+                <div class="dropdown">
+                    <button onclick="dropdownAbilities(1)" class="ability-buttons">Ability1</button>
+                    <div id="dropdown-ability-list-1" class="dropdown-content-ability">
+                        <button onclick="chosenAbility(1,0)">AutoAttack</button>
+                        <button onclick="chosenAbility(1,1)">Passive</button>
+                        <button onclick="chosenAbility(1,2)">Q</button>
+                        <button onclick="chosenAbility(1,3)">W</button>
+                        <button onclick="chosenAbility(1,4)">E</button>
+                        <button onclick="chosenAbility(1,5)">R</button>
+                        <button onclick="chosenAbility(1,6)">ItemActive1</button>
+                        <button onclick="chosenAbility(1,7)">ItemActive2</button>
+                        <button onclick="chosenAbility(1,8)">ItemActive3</button>
+                        <button onclick="chosenAbility(1,9)">ItemActive4</button>
+                        <button onclick="chosenAbility(1,10)">ItemActive5</button>
+                        <button onclick="chosenAbility(1,11)">ItemActive6</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button onclick="dropdownAbilities(2)" class="ability-buttons">Ability2</button>
+                    <div id="dropdown-ability-list-2" class="dropdown-content-ability">
+                        <button onclick="chosenAbility(2,0)">AutoAttack</button>
+                        <button onclick="chosenAbility(2,1)">Passive</button>
+                        <button onclick="chosenAbility(2,2)">Q</button>
+                        <button onclick="chosenAbility(2,3)">W</button>
+                        <button onclick="chosenAbility(2,4)">E</button>
+                        <button onclick="chosenAbility(2,5)">R</button>
+                        <button onclick="chosenAbility(2,6)">ItemActive1</button>
+                        <button onclick="chosenAbility(2,7)">ItemActive2</button>
+                        <button onclick="chosenAbility(2,8)">ItemActive3</button>
+                        <button onclick="chosenAbility(2,9)">ItemActive4</button>
+                        <button onclick="chosenAbility(2,10)">ItemActive5</button>
+                        <button onclick="chosenAbility(2,11)">ItemActive6</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button onclick="dropdownAbilities(3)" class="ability-buttons">Ability3</button>
+                    <div id="dropdown-ability-list-3" class="dropdown-content-ability">
+                        <button onclick="chosenAbility(3,0)">AutoAttack</button>
+                        <button onclick="chosenAbility(3,1)">Passive</button>
+                        <button onclick="chosenAbility(3,2)">Q</button>
+                        <button onclick="chosenAbility(3,3)">W</button>
+                        <button onclick="chosenAbility(3,4)">E</button>
+                        <button onclick="chosenAbility(3,5)">R</button>
+                        <button onclick="chosenAbility(3,6)">ItemActive1</button>
+                        <button onclick="chosenAbility(3,7)">ItemActive2</button>
+                        <button onclick="chosenAbility(3,8)">ItemActive3</button>
+                        <button onclick="chosenAbility(3,9)">ItemActive4</button>
+                        <button onclick="chosenAbility(3,10)">ItemActive5</button>
+                        <button onclick="chosenAbility(3,11)">ItemActive6</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button onclick="dropdownAbilities(4)" class="ability-buttons">Ability4</button>
+                    <div id="dropdown-ability-list-4" class="dropdown-content-ability">
+                        <button onclick="chosenAbility(4,0)">AutoAttack</button>
+                        <button onclick="chosenAbility(4,1)">Passive</button>
+                        <button onclick="chosenAbility(4,2)">Q</button>
+                        <button onclick="chosenAbility(4,3)">W</button>
+                        <button onclick="chosenAbility(4,4)">E</button>
+                        <button onclick="chosenAbility(4,5)">R</button>
+                        <button onclick="chosenAbility(4,6)">ItemActive1</button>
+                        <button onclick="chosenAbility(4,7)">ItemActive2</button>
+                        <button onclick="chosenAbility(4,8)">ItemActive3</button>
+                        <button onclick="chosenAbility(4,9)">ItemActive4</button>
+                        <button onclick="chosenAbility(4,10)">ItemActive5</button>
+                        <button onclick="chosenAbility(4,11)">ItemActive6</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button onclick="dropdownAbilities(5)" class="ability-buttons">Ability5</button>
+                    <div id="dropdown-ability-list-5" class="dropdown-content-ability">
+                        <button onclick="chosenAbility(5,0)">AutoAttack</button>
+                        <button onclick="chosenAbility(5,1)">Passive</button>
+                        <button onclick="chosenAbility(5,2)">Q</button>
+                        <button onclick="chosenAbility(5,3)">W</button>
+                        <button onclick="chosenAbility(5,4)">E</button>
+                        <button onclick="chosenAbility(5,5)">R</button>
+                        <button onclick="chosenAbility(5,6)">ItemActive1</button>
+                        <button onclick="chosenAbility(5,7)">ItemActive2</button>
+                        <button onclick="chosenAbility(5,8)">ItemActive3</button>
+                        <button onclick="chosenAbility(5,9)">ItemActive4</button>
+                        <button onclick="chosenAbility(5,10)">ItemActive5</button>
+                        <button onclick="chosenAbility(5,11)">ItemActive6</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button onclick="dropdownAbilities(6)" class="ability-buttons">Ability6</button>
+                    <div id="dropdown-ability-list-6" class="dropdown-content-ability">
+                        <button onclick="chosenAbility(6,0)">AutoAttack</button>
+                        <button onclick="chosenAbility(6,1)">Passive</button>
+                        <button onclick="chosenAbility(6,2)">Q</button>
+                        <button onclick="chosenAbility(6,3)">W</button>
+                        <button onclick="chosenAbility(6,4)">E</button>
+                        <button onclick="chosenAbility(6,5)">R</button>
+                        <button onclick="chosenAbility(6,6)">ItemActive1</button>
+                        <button onclick="chosenAbility(6,7)">ItemActive2</button>
+                        <button onclick="chosenAbility(6,8)">ItemActive3</button>
+                        <button onclick="chosenAbility(6,9)">ItemActive4</button>
+                        <button onclick="chosenAbility(6,10)">ItemActive5</button>
+                        <button onclick="chosenAbility(6,11)">ItemActive6</button>
+                    </div>
+                </div>
+            </li>
+        </ol>
+    </div>
+
+    <div class="dummy-container">
+        <div class="dummy">
+            <div class="dummy-input">
+                <label for="input-for-dummy-HP">Health</label><input type="number"
+                                                                     id="input-for-dummy-HP">
+            </div>
+            <div class="dummy-input">
+                <label for="input-for-dummy-armor">Armor</label><input type="number"
+                                                                       id="input-for-dummy-armor">
+            </div>
+            <div class="dummy-input">
+                <label for="input-for-dummy-MR">MR</label><input type="number"
+                                                                 id="input-for-dummy-MR">
+            </div>
+        </div>
+        <div class="damage">
+            <p>Physical Damage</p>
+            <p>Magical Damage</p>
+            <p>True Damage</p>
+        </div>
+    </div>
+
+
+</div>
+<button onclick="submitToCalc()" class="calc-button">
+    Calculate
+</button>
+<script>
+    let chosenChampionNumber = 25;
+    let chosenLevelNumber = 25;
+
+    let chosenItem1Number = 25;
+    let chosenItem2Number = 25;
+    let chosenItem3Number = 25;
+    let chosenItem4Number = 25;
+    let chosenItem5Number = 25;
+    let chosenItem6Number = 25;
+
+    let chosenAbility1LevelNumber = 25;
+    let chosenAbility2LevelNumber = 25;
+    let chosenAbility3LevelNumber = 25;
+    let chosenAbility4LevelNumber = 25;
+
+    let chosenRuneKeystoneNumber = 25;
+    let chosenRunePrimary1Number = 25;
+    let chosenRunePrimary2Number = 25;
+    let chosenRunePrimary3Number = 25;
+    let chosenRuneSecondary1Number = 25;
+    let chosenRuneSecondary2Number = 25;
+
+    let chosenAbility1Number = 25;
+    let chosenAbility2Number = 25;
+    let chosenAbility3Number = 25;
+    let chosenAbility4Number = 25;
+    let chosenAbility5Number = 25;
+    let chosenAbility6Number = 25;
+    let chosenAbility7Number = 25;
+    let chosenAbility8Number = 25;
+    let chosenAbility9Number = 25;
+    let chosenAbility10Number = 25;
+    let chosenAbility11Number = 25;
+    let chosenAbility12Number = 25;
+    let chosenAbility13Number = 25;
+    let chosenAbility14Number = 25;
+    let chosenAbility15Number = 25;
+
+    let chosenDummyHPNumber = 25;
+    let chosenDummyArmorNumber = 25;
+    let chosenDummyMRNumber = 25;
+
+
+    let champName0 = "{{ all_champions.0.champion_name }}";
+    let champAD0 = "{{ all_champions.0.base_attack_damage }}";
+    let champArmor0 = "{{ all_champions.0.base_armor }}";
+    let champMR0 = "{{ all_champions.0.base_magic_resistance }}";
+    let champHP0 = "{{ all_champions.0.base_health_points }}";
+
+    let champName1 = "{{ all_champions.1.champion_name }}";
+    let champAD1 = "{{ all_champions.1.base_attack_damage }}";
+    let champArmor1 = "{{ all_champions.1.base_armor }}";
+    let champMR1 = "{{ all_champions.1.base_magic_resistance }}";
+    let champHP1 = "{{ all_champions.1.base_health_points }}";
+
+    let champName2 = "{{ all_champions.2.champion_name }}";
+    let champAD2 = "{{ all_champions.2.base_attack_damage }}";
+    let champArmor2 = "{{ all_champions.2.base_armor }}";
+    let champMR2 = "{{ all_champions.2.base_magic_resistance }}";
+    let champHP2 = "{{ all_champions.2.base_health_points }}";
+
+    let champName3 = "{{ all_champions.3.champion_name }}";
+    let champAD3 = "{{ all_champions.3.base_attack_damage }}";
+    let champArmor3 = "{{ all_champions.3.base_armor }}";
+    let champMR3 = "{{ all_champions.3.base_magic_resistance }}";
+    let champHP3 = "{{ all_champions.3.base_health_points }}";
+
+    let userInput = new FormData();
+    let token = "{{csrf_token}}";
+
+
+    function dropdownChamp() {
+        document.getElementById("dropdownChampionList").classList.toggle("show");
+    }
+
+    function dropdownItems(itemDropdownmenu) {
+        if (itemDropdownmenu === 1) {
+            document.getElementById("dropdownItemList-1").classList.toggle("show");
+        } else if (itemDropdownmenu === 2) {
+            document.getElementById("dropdownItemList-2").classList.toggle("show");
+        } else if (itemDropdownmenu === 3) {
+            document.getElementById("dropdownItemList-3").classList.toggle("show");
+        } else if (itemDropdownmenu === 4) {
+            document.getElementById("dropdownItemList-4").classList.toggle("show");
+        } else if (itemDropdownmenu === 5) {
+            document.getElementById("dropdownItemList-5").classList.toggle("show");
+        } else if (itemDropdownmenu === 6) {
+            document.getElementById("dropdownItemList-6").classList.toggle("show");
+        }
+    }
+
+    function dropdownRunes(runesDropdownmenu) {
+        if (runesDropdownmenu === 1) {
+            document.getElementById("dropdown-rune-keystone").classList.toggle("show");
+        } else if (runesDropdownmenu === 2) {
+            document.getElementById("dropdown-rune-primary1").classList.toggle("show");
+        } else if (runesDropdownmenu === 3) {
+            document.getElementById("dropdown-rune-primary2").classList.toggle("show");
+        } else if (runesDropdownmenu === 4) {
+            document.getElementById("dropdown-rune-primary3").classList.toggle("show");
+        } else if (runesDropdownmenu === 5) {
+            document.getElementById("dropdown-rune-secondary1").classList.toggle("show");
+        } else if (runesDropdownmenu === 6) {
+            document.getElementById("dropdown-rune-secondary2").classList.toggle("show");
+        }
+    }
+
+    function dropdownAbilities(abilitiesDropdownmenu) {
+        if (abilitiesDropdownmenu === 1) {
+            document.getElementById("dropdown-ability-list-1").classList.toggle("show");
+        } else if (abilitiesDropdownmenu === 2) {
+            document.getElementById("dropdown-ability-list-2").classList.toggle("show");
+        } else if (abilitiesDropdownmenu === 3) {
+            document.getElementById("dropdown-ability-list-3").classList.toggle("show");
+        } else if (abilitiesDropdownmenu === 4) {
+            document.getElementById("dropdown-ability-list-4").classList.toggle("show");
+        } else if (abilitiesDropdownmenu === 5) {
+            document.getElementById("dropdown-ability-list-5").classList.toggle("show");
+        } else if (abilitiesDropdownmenu === 6) {
+            document.getElementById("dropdown-ability-list-6").classList.toggle("show");
+        }
+    }
+
+    function chosenChamp(champNumber) {
+        if (champNumber === 0) {
+            chosenChampionNumber = champNumber;
+            document.getElementById("champion_stats").innerHTML = champName0;
+            document.getElementById("champion_stats1").innerHTML = champAD0;
+            document.getElementById("champion_stats2").innerHTML = champArmor0;
+            document.getElementById("champion_stats3").innerHTML = champMR0;
+            document.getElementById("champion_stats4").innerHTML = champHP0;
+            document.getElementsByClassName("champ-button")[0].innerHTML = champName0;
+        } else if (champNumber === 1) {
+            chosenChampionNumber = champNumber;
+            document.getElementById("champion_stats").innerHTML = champName1;
+            document.getElementById("champion_stats1").innerHTML = champAD1;
+            document.getElementById("champion_stats2").innerHTML = champArmor1;
+            document.getElementById("champion_stats3").innerHTML = champMR1;
+            document.getElementById("champion_stats4").innerHTML = champHP1;
+            document.getElementsByClassName("champ-button")[0].innerHTML = champName1;
+        } else if (champNumber === 2) {
+            chosenChampionNumber = champNumber;
+            document.getElementById("champion_stats").innerHTML = champName2;
+            document.getElementById("champion_stats1").innerHTML = champAD2;
+            document.getElementById("champion_stats2").innerHTML = champArmor2;
+            document.getElementById("champion_stats3").innerHTML = champMR2;
+            document.getElementById("champion_stats4").innerHTML = champHP2;
+            document.getElementsByClassName("champ-button")[0].innerHTML = champName2;
+        } else if (champNumber === 3) {
+            chosenChampionNumber = champNumber;
+            document.getElementById("champion_stats").innerHTML = champName3;
+            document.getElementById("champion_stats1").innerHTML = champAD3;
+            document.getElementById("champion_stats2").innerHTML = champArmor3;
+            document.getElementById("champion_stats3").innerHTML = champMR3;
+            document.getElementById("champion_stats4").innerHTML = champHP3;
+            document.getElementsByClassName("champ-button")[0].innerHTML = champName3;
+        }
+        console.log(chosenChampionNumber)
+    }
+
+    function chosenItem(dropdownButtonNumber, itemNumber) {
+        if (dropdownButtonNumber === 1) {
+            if (itemNumber === 0) {
+                chosenItem1Number = 0;
+                document.getElementsByClassName('item-buttons')[0].innerHTML = "LA";
+            } else if (itemNumber === 1) {
+                chosenItem1Number = 1;
+                document.getElementsByClassName('item-buttons')[0].innerHTML = "LT";
+            }
+        } else if (dropdownButtonNumber === 2) {
+            if (itemNumber === 0) {
+                chosenItem2Number = 0;
+                document.getElementsByClassName('item-buttons')[1].innerHTML = "LA";
+            } else if (itemNumber === 1) {
+                chosenItem2Number = 1;
+                document.getElementsByClassName('item-buttons')[1].innerHTML = "LT";
+            }
+        } else if (dropdownButtonNumber === 3) {
+            if (itemNumber === 0) {
+                chosenItem3Number = 0;
+                document.getElementsByClassName('item-buttons')[2].innerHTML = "LA";
+            } else if (itemNumber === 1) {
+                chosenItem3Number = 1;
+                document.getElementsByClassName('item-buttons')[2].innerHTML = "LT";
+            }
+        } else if (dropdownButtonNumber === 4) {
+            if (itemNumber === 0) {
+                chosenItem4Number = 0;
+                document.getElementsByClassName('item-buttons')[3].innerHTML = "LA";
+            } else if (itemNumber === 1) {
+                chosenItem4Number = 1;
+                document.getElementsByClassName('item-buttons')[3].innerHTML = "LT";
+            }
+        } else if (dropdownButtonNumber === 5) {
+            if (itemNumber === 0) {
+                chosenItem5Number = 0;
+                document.getElementsByClassName('item-buttons')[4].innerHTML = "LA";
+            } else if (itemNumber === 1) {
+                chosenItem5Number = 1;
+                document.getElementsByClassName('item-buttons')[4].innerHTML = "LT";
+            }
+        } else if (dropdownButtonNumber === 6) {
+            if (itemNumber === 0) {
+                chosenItem6Number = 0;
+                document.getElementsByClassName('item-buttons')[5].innerHTML = "LA";
+            } else if (itemNumber === 1) {
+                chosenItem6Number = 1;
+                document.getElementsByClassName('item-buttons')[5].innerHTML = "LT";
+            }
+        }
+    }
+
+    function chosenRune(dropdownButtonNumber, runeNumber) {
+        if (dropdownButtonNumber === 1) {
+            if (runeNumber === 0) {
+                chosenRuneKeystoneNumber = 0;
+                document.getElementsByClassName('rune-buttons')[0].innerHTML = 'Press the Attack';
+            } else if (runeNumber === 1) {
+                chosenRuneKeystoneNumber = 1;
+                document.getElementsByClassName('rune-buttons')[0].innerHTML = 'Lethal Tempo';
+            } else if (runeNumber === 2) {
+                chosenRuneKeystoneNumber = 2;
+                document.getElementsByClassName('rune-buttons')[0].innerHTML = 'Fleet Footwork';
+            } else if (runeNumber === 3) {
+                chosenRuneKeystoneNumber = 3;
+                document.getElementsByClassName('rune-buttons')[0].innerHTML = 'Conqueror';
+            }
+        } else if (dropdownButtonNumber === 2) {
+            if (runeNumber === 0) {
+                chosenRunePrimary1Number = 0;
+                document.getElementsByClassName('rune-buttons')[1].innerHTML = 'Overheal';
+            } else if (runeNumber === 1) {
+                chosenRunePrimary1Number = 1;
+                document.getElementsByClassName('rune-buttons')[1].innerHTML = 'Triumph';
+            } else if (runeNumber === 2) {
+                chosenRunePrimary1Number = 2;
+                document.getElementsByClassName('rune-buttons')[1].innerHTML = 'Presence of Mind';
+            }
+        } else if (dropdownButtonNumber === 3) {
+            if (runeNumber === 0) {
+                chosenRunePrimary2Number = 0;
+                document.getElementsByClassName('rune-buttons')[2].innerHTML = 'Legend: Alacrity';
+            } else if (runeNumber === 1) {
+                chosenRunePrimary2Number = 1;
+                document.getElementsByClassName('rune-buttons')[2].innerHTML = 'Legend: Tenacity';
+            } else if (runeNumber === 2) {
+                chosenRunePrimary2Number = 2;
+                document.getElementsByClassName('rune-buttons')[2].innerHTML = 'Legend: Bloodline';
+            }
+        } else if (dropdownButtonNumber === 4) {
+            if (runeNumber === 0) {
+                chosenRunePrimary3Number = 0;
+                document.getElementsByClassName('rune-buttons')[3].innerHTML = 'Coup de Grace';
+            } else if (runeNumber === 1) {
+                chosenRunePrimary3Number = 1;
+                document.getElementsByClassName('rune-buttons')[3].innerHTML = 'Cut Down';
+            } else if (runeNumber === 2) {
+                chosenRunePrimary3Number = 2;
+                document.getElementsByClassName('rune-buttons')[3].innerHTML = 'Last Stand';
+            }
+        } else if (dropdownButtonNumber === 5) {
+            if (runeNumber === 0) {
+                chosenRuneSecondary1Number = 0;
+                document.getElementsByClassName('rune-buttons')[4].innerHTML = 'Conditioning';
+            } else if (runeNumber === 1) {
+                chosenRuneSecondary1Number = 1;
+                document.getElementsByClassName('rune-buttons')[4].innerHTML = 'Second Wind';
+            } else if (runeNumber === 2) {
+                chosenRuneSecondary1Number = 2;
+                document.getElementsByClassName('rune-buttons')[4].innerHTML = 'Bone Plating';
+            }
+        } else if (dropdownButtonNumber === 6) {
+            if (runeNumber === 0) {
+                chosenRuneSecondary2Number = 0;
+                document.getElementsByClassName('rune-buttons')[5].innerHTML = 'Overgrowth';
+            } else if (runeNumber === 1) {
+                chosenRuneSecondary2Number = 1;
+                document.getElementsByClassName('rune-buttons')[5].innerHTML = 'Revitalize';
+            } else if (runeNumber === 2) {
+                chosenRuneSecondary2Number = 2;
+                document.getElementsByClassName('rune-buttons')[5].innerHTML = 'Unflinching';
+            }
+        }
+    }
+
+    function chosenAbility(dropdownButtonNumber, abilityNumber) {
+        if (dropdownButtonNumber === 1) {
+            for (let i = 0; i <= 11; i++) {
+                if (abilityNumber === i) {
+                    chosenAbility1Number = i;
+                }
+            }
+        } else if (dropdownButtonNumber === 2) {
+            for (let i = 0; i <= 11; i++) {
+                if (abilityNumber === i) {
+                    chosenAbility2Number = i;
+                }
+            }
+        } else if (dropdownButtonNumber === 3) {
+            for (let i = 0; i <= 11; i++) {
+                if (abilityNumber === i) {
+                    chosenAbility3Number = i;
+                }
+            }
+        } else if (dropdownButtonNumber === 4) {
+            for (let i = 0; i <= 11; i++) {
+                if (abilityNumber === i) {
+                    chosenAbility4Number = i;
+                }
+            }
+        } else if (dropdownButtonNumber === 5) {
+            for (let i = 0; i <= 11; i++) {
+                if (abilityNumber === i) {
+                    chosenAbility5Number = i;
+                }
+            }
+        } else if (dropdownButtonNumber === 6) {
+            for (let i = 0; i <= 11; i++) {
+                if (abilityNumber === i) {
+                    chosenAbility6Number = i;
+                }
+            }
+        }
+    }
+
+    function submitToCalc() {
+        chosenLevelNumber = document.getElementById("inputForLevel").value;
+
+        chosenAbility1LevelNumber = document.getElementById("input-for-spell-q").value;
+        chosenAbility2LevelNumber = document.getElementById("input-for-spell-w").value;
+        chosenAbility3LevelNumber = document.getElementById("input-for-spell-e").value;
+        chosenAbility4LevelNumber = document.getElementById("input-for-spell-r").value;
+
+        chosenDummyHPNumber = document.getElementById("input-for-dummy-HP").value;
+        chosenDummyArmorNumber = document.getElementById("input-for-dummy-armor").value;
+        chosenDummyMRNumber = document.getElementById("input-for-dummy-MR").value;
+
+        userInput.append('chosenChampion', chosenChampionNumber);
+        userInput.append('chosenLevel', chosenLevelNumber);
+
+        userInput.append('chosenItem1', chosenItem1Number);
+        userInput.append('chosenItem2', chosenItem2Number);
+        userInput.append('chosenItem3', chosenItem3Number);
+        userInput.append('chosenItem4', chosenItem4Number);
+        userInput.append('chosenItem5', chosenItem5Number);
+        userInput.append('chosenItem6', chosenItem6Number);
+
+        userInput.append('chosenAbility1Level', chosenAbility1LevelNumber);
+        userInput.append('chosenAbility2Level', chosenAbility2LevelNumber);
+        userInput.append('chosenAbility3Level', chosenAbility3LevelNumber);
+        userInput.append('chosenAbility4Level', chosenAbility4LevelNumber);
+
+        userInput.append('chosenRuneKeystone', chosenRuneKeystoneNumber);
+        userInput.append('chosenRunePrimary1', chosenRunePrimary1Number);
+        userInput.append('chosenRunePrimary2', chosenRunePrimary2Number);
+        userInput.append('chosenRunePrimary3', chosenRunePrimary3Number);
+        userInput.append('chosenRuneSecondary1', chosenRuneSecondary1Number);
+        userInput.append('chosenRuneSecondary2', chosenRuneSecondary2Number);
+
+        userInput.append('chosenAbility1', chosenAbility1Number);
+        userInput.append('chosenAbility2', chosenAbility2Number);
+        userInput.append('chosenAbility3', chosenAbility3Number);
+        userInput.append('chosenAbility4', chosenAbility4Number);
+        userInput.append('chosenAbility5', chosenAbility5Number);
+        userInput.append('chosenAbility6', chosenAbility6Number);
+        userInput.append('chosenAbility7', chosenAbility7Number);
+        userInput.append('chosenAbility8', chosenAbility8Number);
+        userInput.append('chosenAbility9', chosenAbility9Number);
+        userInput.append('chosenAbility10', chosenAbility10Number);
+        userInput.append('chosenAbility11', chosenAbility11Number);
+        userInput.append('chosenAbility12', chosenAbility12Number);
+        userInput.append('chosenAbility13', chosenAbility13Number);
+        userInput.append('chosenAbility14', chosenAbility14Number);
+        userInput.append('chosenAbility15', chosenAbility15Number);
+
+        userInput.append('chosenDummyHP', chosenDummyHPNumber);
+        userInput.append('chosenDummyArmor', chosenDummyArmorNumber);
+        userInput.append('chosenDummyMR', chosenDummyMRNumber);
+
+        userInput.append('csrfmiddlewaretoken', token);
+
+        fetch('/dmgcalc/', {
+            method: 'POST',
+            body: userInput
+        })
+
+        userInput.delete("chosenChampion");
+        userInput.delete("chosenLevel");
+
+        userInput.delete("chosenItem1");
+        userInput.delete("chosenItem2");
+        userInput.delete("chosenItem3");
+        userInput.delete("chosenItem4");
+        userInput.delete("chosenItem5");
+        userInput.delete("chosenItem6");
+
+        userInput.delete("chosenAbility1Level");
+        userInput.delete("chosenAbility2Level");
+        userInput.delete("chosenAbility3Level");
+        userInput.delete("chosenAbility4Level");
+
+        userInput.delete("chosenRune = 25Keystone");
+        userInput.delete("chosenRunePrimary1");
+        userInput.delete("chosenRunePrimary2");
+        userInput.delete("chosenRunePrimary3");
+        userInput.delete("chosenRuneSecondary1");
+        userInput.delete("chosenRuneSecondary2");
+
+        userInput.delete("chosenAbility1");
+        userInput.delete("chosenAbility2");
+        userInput.delete("chosenAbility3");
+        userInput.delete("chosenAbility4");
+        userInput.delete("chosenAbility5");
+        userInput.delete("chosenAbility6");
+        userInput.delete("chosenAbility7");
+        userInput.delete("chosenAbility8");
+        userInput.delete("chosenAbility9");
+        userInput.delete("chosenAbility10");
+        userInput.delete("chosenAbility11");
+        userInput.delete("chosenAbility12");
+        userInput.delete("chosenAbility13");
+        userInput.delete("chosenAbility14");
+        userInput.delete("chosenAbility15");
+
+        userInput.delete("chosenDummyHP");
+        userInput.delete("chosenDummyArmor");
+        userInput.delete("chosenDummyMR");
+
+        userInput.delete("csrfmiddlewaretoken");
+    }
+
+    window.onclick = function (event) {
+        if (!event.target.matches(".champ-button")) {
+            let dropdowns = document.getElementsByClassName("dropdown-content-champion")
+            let i;
+            for (i = 0; i < dropdowns.length; i++) {
+                let openDropdown = dropdowns[i]
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show')
+                }
+            }
+        }
+        if (!event.target.matches(".item-buttons")) {
+            let dropdowns = document.getElementsByClassName("dropdown-content-item")
+            let i;
+            for (i = 0; i < dropdowns.length; i++) {
+                let openDropdown = dropdowns[i]
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show')
+                }
+            }
+        }
+        if (!event.target.matches(".rune-buttons")) {
+            let dropdowns = document.getElementsByClassName("dropdown-content-rune")
+            let i;
+            for (i = 0; i < dropdowns.length; i++) {
+                let openDropdown = dropdowns[i]
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show')
+                }
+            }
+        }
+        if (!event.target.matches(".ability-buttons")) {
+            let dropdowns = document.getElementsByClassName("dropdown-content-ability")
+            let i;
+            for (i = 0; i < dropdowns.length; i++) {
+                let openDropdown = dropdowns[i]
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show')
+                }
+            }
+        }
+    }
+
+</script>
 </body>
 </html>

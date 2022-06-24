@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='champion',
-            name='armour',
+            name='armor',
             field=models.IntegerField(default=0),
         ),
         migrations.AddField(

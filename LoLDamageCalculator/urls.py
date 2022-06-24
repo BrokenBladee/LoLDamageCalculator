@@ -19,5 +19,5 @@ from dmgcalc.views import dmgcalc
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('dmgcalc/',dmgcalc)
+    path('dmgcalc/', dmgcalc)
 ]
