@@ -44,6 +44,7 @@ class Champion(models.Model):
 
 class CalculatedStatsWithLevel(models.Model):
     level = models.FloatField(default=1)
+    champion_name = models.CharField(max_length=200, default='')
 
     calc_health_points = models.FloatField(default=0)
     calc_health_points_regen = models.FloatField(default=0)
@@ -56,6 +57,8 @@ class CalculatedStatsWithLevel(models.Model):
     calc_magic_resistance = models.FloatField(default=0)
 
     calc_attack_damage = models.FloatField(default=0)
+
+    calc_crit_damage = models.FloatField(default=0)
 
     calc_attack_speed = models.FloatField(default=0)
 
@@ -92,26 +95,91 @@ class FinalChampionStatsWithLevelItemsRunes(models.Model):
     attack_speed_windup = models.FloatField(default=0)
 
     tenacity = models.FloatField(default=0)
+    slow_resistance = models.FloatField(default=0)
+
+    heal_and_shield_power = models.FloatField(default=0)
 
     life_steal = models.FloatField(default=0)
     physical_vamp = models.FloatField(default=0)
     omnivamp = models.FloatField(default=0)
 
+    gold_generation = models.FloatField(default=20.4)
+
 
 class Items(models.Model):
     id = models.IntegerField(primary_key=True)
     item_name = models.CharField(max_length=200)
-    is_mythic = models.BooleanField(default=False)
-    is_legendary = models.BooleanField(default=False)
+    # starter: 1, consumables: 2, trinkets: 3, distributed: 4, boots: 5, basic: 6, epic: 7, legendary: 8, mythic: 9, champ_exc: 10, ornn: 11
+    type_of_item = models.IntegerField(default=0)
 
-    item_stat_1 = models.FloatField(default=0)
-    item_stat_2 = models.FloatField(default=0)
-    item_stat_3 = models.FloatField(default=0)
-    item_stat_4 = models.FloatField(default=0)
+    item_stat_hp = models.FloatField(default=0)
+    item_stat_hp_regen = models.FloatField(default=0)
 
-    mythic_stats_1 = models.FloatField(default=0)
-    mythic_stats_2 = models.FloatField(default=0)
-    mythic_stats_3 = models.FloatField(default=0)
+    item_stat_mana = models.FloatField(default=0)
+    item_stat_mana_regen = models.FloatField(default=0)
+
+    item_stat_armor = models.FloatField(default=0)
+    item_stat_mr = models.FloatField(default=0)
+
+    item_stat_attack_damage = models.FloatField(default=0)
+
+    item_stat_crit_damage = models.FloatField(default=0)
+    item_stat_crit_chance = models.FloatField(default=0)
+
+    item_stat_armor_pen_percentage = models.FloatField(default=0)
+    item_stat_armor_pen_flat = models.FloatField(default=0)
+
+    item_stat_ability_power = models.FloatField(default=0)
+
+    item_stat_ability_haste = models.FloatField(default=0)
+
+    item_stat_magic_pen_percentage = models.FloatField(default=0)
+    item_stat_magic_pen_flat = models.FloatField(default=0)
+
+    item_stat_movement_speed_percentage = models.FloatField(default=0)
+    item_stat_movement_speed_flat = models.FloatField(default=0)
+
+    item_stat_attack_speed = models.FloatField(default=0)
+
+    item_stat_tenacity = models.FloatField(default=0)
+    item_stat_slow_resistance = models.FloatField(default=0)
+
+    item_stat_heal_and_shield_power = models.FloatField(default=0)
+
+    item_stat_life_steal = models.FloatField(default=0)
+    item_stat_physical_vamp = models.FloatField(default=0)
+    item_stat_omnivamp = models.FloatField(default=0)
+    item_stat_gold_generation = models.FloatField(default=0)
+
+    item_stat_grievous_wounds = models.FloatField(default=0.0)
+
+    ##
+
+    mythic_stat_hp = models.FloatField(default=0)
+    mythic_stat_armor = models.FloatField(default=0)
+    mythic_stat_mr = models.FloatField(default=0)
+
+    mythic_stat_attack_damage = models.FloatField(default=0)
+    mythic_stat_attack_speed = models.FloatField(default=0)
+    mythic_stat_armor_pen_percentage = models.FloatField(default=0)
+    mythic_stat_armor_pen_flat = models.FloatField(default=0)
+
+    mythic_stat_magic_pen_percentage = models.FloatField(default=0)
+    mythic_stat_magic_pen_flat = models.FloatField(default=0)
+
+    mythic_stat_ability_power = models.FloatField(default=0)
+    mythic_stat_ability_haste = models.FloatField(default=0)
+
+    mythic_stat_movement_speed_percentage = models.FloatField(default=0)
+    mythic_stat_movement_speed_flat = models.FloatField(default=0)
+
+    mythic_stat_tenacity = models.FloatField(default=0)
+    mythic_stat_slow_resistance = models.FloatField(default=0)
+    mythic_stat_size = models.FloatField(default=0)
+    mythic_stat_empower_item_passive = models.FloatField(default=0)
+    mythic_stat_omnivamp = models.FloatField(default=0)
+
+    gold_cost = models.IntegerField(default=0)
 
 
 class Abilities(models.Model):
@@ -169,4 +237,3 @@ class DamageOutput(models.Model):
     physical_damage_dealt = models.FloatField(default=0)
     magical_damage_dealt = models.FloatField(default=0)
     true_damage_dealt = models.FloatField(default=0)
-
