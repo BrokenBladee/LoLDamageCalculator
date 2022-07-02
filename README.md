@@ -42,3 +42,5 @@ python -m pip install django
 Now you can run the app by typing:
 ```
 python manage.py runserver
+```
+And now you can open the website in a webbrowser with: http://127.0.0.1:8000/dmgcalc
