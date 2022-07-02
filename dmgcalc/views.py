@@ -129,18 +129,28 @@ def calculation_of_stats_with_user_input_based_on_items_and_level_stats():
 
     # RUNES MISSING HERE!!!!!!!!!!!!!!!
 
-    champion_hp = champion_stats_based_on_level_dict.get('calc_health_points')
+    champion_base_hp = champion_stats_based_on_level_dict.get('calc_health_points')
+    bonus_champion_hp = 0
+    champion_hp = 0
     champion_base_hp_regen = champion_stats_based_on_level_dict.get('calc_health_points_regen')
     champion_hp_regen = champion_base_hp_regen
 
-    champion_mana = champion_stats_based_on_level_dict.get('calc_mana')
+    champion_base_mana = champion_stats_based_on_level_dict.get('calc_mana')
+    bonus_champion_mana = 0
+    champion_mana = 0
     champion_base_mana_regen = champion_stats_based_on_level_dict.get('calc_mana_regen')
     champion_mana_regen = champion_base_mana_regen
 
-    champion_armor = champion_stats_based_on_level_dict.get('calc_armor')
-    champion_mr = champion_stats_based_on_level_dict.get('calc_magic_resistance')
+    champion_base_armor = champion_stats_based_on_level_dict.get('calc_armor')
+    bonus_champion_armor = 0
+    champion_armor = 0
+    champion_base_mr = champion_stats_based_on_level_dict.get('calc_magic_resistance')
+    bonus_champion_mr = 0
+    champion_mr = 0
 
-    champion_attack_damage = champion_stats_based_on_level_dict.get('calc_attack_damage')
+    champion_base_attack_damage = champion_stats_based_on_level_dict.get('calc_attack_damage')
+    bonus_champion_attack_damage = 0
+    champion_attack_damage = 0
     champion_base_attack_speed = Champion.objects.filter(id=user_input_dict.get('champion_index') + 1).values().first().get('base_attack_speed')
     champion_attack_speed_ratio = Champion.objects.filter(id=user_input_dict.get('champion_index') + 1).values().first().get('attack_speed_ratio')
     champion_bonus_attack_speed = champion_stats_based_on_level_dict.get('calc_bonus_attack_speed')
@@ -223,24 +233,24 @@ def calculation_of_stats_with_user_input_based_on_items_and_level_stats():
             item_gold_cost = chosen_item.get('gold_cost')
 
             item_hp = chosen_item.get('item_stat_hp')
-            champion_hp += item_hp
+            bonus_champion_hp += item_hp
             item_hp_regen = chosen_item.get('item_stat_hp_regen')
             if item_hp_regen > 0:
                 champion_hp_regen += champion_base_hp_regen * item_hp_regen
 
             item_mana = chosen_item.get('item_stat_mana')
-            champion_mana += item_mana
+            bonus_champion_mana += item_mana
             item_mana_regen = chosen_item.get('item_stat_mana_regen')
             if item_mana_regen > 0:
                 champion_mana_regen += champion_base_mana_regen * item_mana_regen
 
             item_armor = chosen_item.get('item_stat_armor')
-            champion_armor += item_armor
+            bonus_champion_armor += item_armor
             item_mr = chosen_item.get('item_stat_mr')
-            champion_mr += item_mr
+            bonus_champion_mr += item_mr
 
             item_attack_damage = chosen_item.get('item_stat_attack_damage')
-            champion_attack_damage += item_attack_damage
+            bonus_champion_attack_damage += item_attack_damage
             item_attack_speed = chosen_item.get('item_stat_attack_speed')
             champion_bonus_attack_speed += item_attack_speed
 
@@ -324,14 +334,14 @@ def calculation_of_stats_with_user_input_based_on_items_and_level_stats():
             if chosen_item and chosen_item.get('id') != 1 and item_type == 9:
                 for i in range(0, number_of_legendary):
                     item_mythic_hp = chosen_item.get('mythic_stat_hp')
-                    champion_hp += item_mythic_hp
+                    bonus_champion_hp += item_mythic_hp
                     item_mythic_armor = chosen_item.get('mythic_stat_armor')
-                    champion_armor += item_mythic_armor
+                    bonus_champion_armor += item_mythic_armor
                     item_mythic_mr = chosen_item.get('mythic_stat_mr')
-                    champion_mr += item_mythic_mr
+                    bonus_champion_mr += item_mythic_mr
 
                     item_mythic_attack_damage = chosen_item.get('mythic_stat_attack_damage')
-                    champion_attack_damage += item_mythic_attack_damage
+                    bonus_champion_attack_damage += item_mythic_attack_damage
                     item_mythic_attack_speed = chosen_item.get('mythic_stat_attack_speed')
                     champion_bonus_attack_speed += item_mythic_attack_speed
                     item_mythic_armor_pen_percentage = chosen_item.get('mythic_stat_armor_pen_percentage')
@@ -378,6 +388,30 @@ def calculation_of_stats_with_user_input_based_on_items_and_level_stats():
                     # item_mythic_size, item_mythic_empower_item_passive not necessary right now but nothing happens
                     item_mythic_size = chosen_item.get('mythic_stat_size')
                     item_mythic_empower_item_passive = chosen_item.get('mythic_stat_empower_item_passive')
+    if has_steraks_gage:
+        bonus_champion_attack_damage += round(0.45 * champion_base_attack_damage, 2)
+    if has_titanic_hydra:
+        bonus_champion_attack_damage += 0.02 * bonus_champion_hp
+    if has_demonic_embrace:
+        champion_ability_power += 0.02 * bonus_champion_hp
+    if has_rabadons_deathcap:
+        champion_ability_power *= 0.35
+    # DARK SEAL/MEJAIS TECHNIALLY BUT NOT WORKING ANYWAYS
+    champion_hp += bonus_champion_hp
+    champion_hp += champion_base_hp
+
+    champion_mana += bonus_champion_mana
+    champion_mana += champion_base_mana
+
+    champion_armor += bonus_champion_armor
+    champion_armor += champion_base_armor
+
+    champion_mr += bonus_champion_mr
+    champion_mr += champion_base_mr
+
+    champion_attack_damage += bonus_champion_attack_damage
+    champion_attack_damage += champion_base_attack_damage
+
     champion_armor_pen_percentage = 1 - champion_armor_pen_percentage
     champion_magic_pen_percentage = 1 - champion_magic_pen_percentage
     champion_tenacity = 1 - champion_tenacity
@@ -385,9 +419,14 @@ def calculation_of_stats_with_user_input_based_on_items_and_level_stats():
     champion_attack_speed = attack_speed_calculation(champion_base_attack_speed, champion_attack_speed_ratio,
                                                      champion_bonus_attack_speed)
 
-    FinalChampionStatsWithLevelItemsRunes.objects.create(health_points=champion_hp, health_points_regen=champion_hp_regen, mana=champion_mana,
-                                                         mana_regen=champion_mana_regen, armor=champion_armor, magic_resistance=champion_mr,
-                                                         attack_damage=champion_attack_damage, crit_damage=champion_crit_damage,
+    FinalChampionStatsWithLevelItemsRunes.objects.create(health_points=champion_hp, base_health_points=champion_base_hp,
+                                                         bonus_health_points=bonus_champion_hp, health_points_regen=champion_hp_regen,
+                                                         mana=champion_mana, base_mana=champion_base_mana, bonus_mana=bonus_champion_mana,
+                                                         mana_regen=champion_mana_regen, armor=champion_armor, base_armor=champion_base_armor,
+                                                         bonus_armor=bonus_champion_armor, magic_resistance=champion_mr,
+                                                         base_magic_resistance=champion_base_mr, bonus_magic_resistance=bonus_champion_mr,
+                                                         attack_damage=champion_attack_damage, base_attack_damage=champion_base_attack_damage,
+                                                         bonus_attack_damage=bonus_champion_attack_damage, crit_damage=champion_crit_damage,
                                                          crit_chance=champion_crit_chance, armor_pen_percentage=champion_armor_pen_percentage,
                                                          armor_pen_flat=champion_armor_pen_flat, ability_power=champion_ability_power,
                                                          ability_haste=champion_ability_haste, magic_pen_percentage=champion_magic_pen_percentage,

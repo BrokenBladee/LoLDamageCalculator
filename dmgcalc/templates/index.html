@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- {% load static %} -->
     <meta charset="UTF-8">
     <title>DMGCalc</title>
-    <!-- <link rel="stylesheet" href="{% static 'style.css' %}"> -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
@@ -383,14 +381,10 @@
         <div class="dropdown">
             <button onclick="dropdownChamp()" class="champ-button">Select Champion</button>
             <div id="dropdownChampionList" class="dropdown-content-champion">
-                <button onclick="chosenChamp(0)"
-                        id="champion_number_0">{{ all_champions.0.champion_name }}</button>
-                <button onclick="chosenChamp(1)"
-                        id="champion_number_1">{{ all_champions.1.champion_name }}</button>
-                <button onclick="chosenChamp(2)"
-                        id="champion_number_2">{{ all_champions.2.champion_name }}</button>
-                <button onclick="chosenChamp(3)"
-                        id="champion_number_3">{{ all_champions.3.champion_name }}</button>
+                {% for champ in all_champions %}
+                    <button onclick="chosenChamp({{ forloop.counter0 }})"
+                            id="champion_number_0">{{ champ.champion_name }}</button>
+                {% endfor %}
             </div>
         </div>
         <div class="items">
@@ -780,6 +774,9 @@
         <button onclick="submitToCalc()" class="calc-button">
             Calculate
         </button>
+        <button onclick="window.location.reload()" class="calc-button">
+            reload
+        </button>
     </div>
 
     <div class="dummy-container">
@@ -896,9 +893,9 @@
     }
 
     function chosenChamp(champNumber) {
-        for (let x = 0; x < 4; x++) {
+        for (let x = 0; x < 6; x++) {
             if (x === champNumber) {
-                chosenChampionNumber = champNumber;
+                chosenChampionNumber = champNumber - 1;
                 console.log(chosenChampionNumber);
                 {% for champ in all_champions %}
                     if (x === {{ forloop.counter0 }}) {
@@ -1162,8 +1159,9 @@
         userInput.delete("chosenDummyMR");
 
         userInput.delete("csrfmiddlewaretoken");
-        window.location.reload()
     }
+
+
 
     window.onclick = function (event) {
         if (!event.target.matches(".champ-button")) {

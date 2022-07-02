@@ -37,6 +37,7 @@ class Champion(models.Model):
     attack_speed_bonus = models.FloatField(default=0)
 
     base_movement_speed = models.FloatField(default=0)
+
     # champion_icon = models.ImageField()
 
     def __str__(self):
@@ -75,24 +76,36 @@ class FinalChampionStatsWithLevelItemsRunes(models.Model):
     item_name_five = models.CharField(max_length=200, default='')
     item_name_six = models.CharField(max_length=200, default='')
 
-    ability_q_level = health_points = models.FloatField(default=0)
-    ability_w_level = health_points = models.FloatField(default=0)
-    ability_e_level = health_points = models.FloatField(default=0)
-    ability_r_level = health_points = models.FloatField(default=0)
+    ability_q_level = models.FloatField(default=0)
+    ability_w_level = models.FloatField(default=0)
+    ability_e_level = models.FloatField(default=0)
+    ability_r_level = models.FloatField(default=0)
 
     # RUNES STILL MISSING HERE!!!!!!!!!!!
 
     health_points = models.FloatField(default=0)
+    base_health_points = models.FloatField(default=0)
+    bonus_health_points = models.FloatField(default=0)
     health_points_regen = models.FloatField(default=0)
+    base_health_points_regen = models.FloatField(default=0)
 
     mana = models.FloatField(default=0)
+    base_mana = models.FloatField(default=0)
+    bonus_mana = models.FloatField(default=0)
     mana_regen = models.FloatField(default=0)
+    base_mana_regen = models.FloatField(default=0)
 
     armor = models.FloatField(default=0)
+    base_armor = models.FloatField(default=0)
+    bonus_armor = models.FloatField(default=0)
 
     magic_resistance = models.FloatField(default=0)
+    base_magic_resistance = models.FloatField(default=0)
+    bonus_magic_resistance = models.FloatField(default=0)
 
     attack_damage = models.FloatField(default=0)
+    base_attack_damage = models.FloatField(default=0)
+    bonus_attack_damage = models.FloatField(default=0)
 
     crit_damage = models.FloatField(default=0)
     crit_chance = models.FloatField(default=0)
