@@ -23,3 +23,24 @@ Two Folders, one Database and one Python file
 **urls.py** is a small file that conatins the url.
 
 **'views.py' & 'models.py'** are my main two files. The models.py file contains all my tables for my sqlite3 database. The views.py file renders the index.html file and all the templates from my database, that I can use in my index.html to display the content or get user input in my database. It also contains all the calculation.
+
+## How to locally open and use the website with VSCode:
+Clone the git repository and open with VSCode, either install Python or install the Python extension, if you want to check the database install the sqlite extension and then rightclick on db.sqlite3 and choose Open Database which will open it in the left corner, where you can choose the tables. Now create a virtual envirenmont using following commands in the console:
+```
+python3 -m venv .venv
+```
+```
+source .venv/bin/activate
+```
+Then install pip and Django:
+```
+python -m pip install --upgrade pip
+```
+```
+python -m pip install django
+```
+Now you can run the app by typing:
+```
+python manage.py runserver
+```
+And now you can open the website in a webbrowser with: http://127.0.0.1:8000/dmgcalc
