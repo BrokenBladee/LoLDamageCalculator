@@ -19,6 +19,6 @@ from dmgcalc.views import dmgcalc_function
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('dmgcalc/', include('dmgcalc.urls'))
-    path('dmgcalc/', dmgcalc_function())
+    path('dmgcalc/', include('dmgcalc.urls'))
+    # path('dmgcalc/', dmgcalc_function)
 ]
