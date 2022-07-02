@@ -1,2 +1,4 @@
+python==3.9.0
 Django==4.0.5
 pip==22.1.2
+gunicorn==20.1.0
