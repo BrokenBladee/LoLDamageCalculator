@@ -528,7 +528,7 @@ def calculation_of_damage():
     print(abilities)
 
     dummy_current_hp = dummy_hp
-    for x in range(0, 16):
+    for x in range(0, 15):
         if abilities[x] > -1:
             if abilities[x] == 0:
                 auto_attack_damage = calculate_damage_based_on_mr_and_armor(seraphine_auto_dmg(champion_attack_damage), dummy_mr, dummy_armor)
@@ -599,6 +599,10 @@ def calculation_of_damage():
 
     print(abilities_damage_dealt)
 
+    physical_damage = round(physical_damage)
+    magic_damage = round(magic_damage)
+    true_damage = round(true_damage)
+
     DamageOutput.objects.create(dummy_hp=dummy_hp, dummy_armor=dummy_armor, dummy_mr=dummy_mr, physical_damage_dealt=physical_damage,
                                 magical_damage_dealt=magic_damage, true_damage_dealt=true_damage, ability1=abilities_damage_dealt[0],
                                 ability2=abilities_damage_dealt[1], ability3=abilities_damage_dealt[2], ability4=abilities_damage_dealt[3],
@@ -639,35 +643,80 @@ def seraphine_passive_dmg(ap, level):
 
 def seraphine_q_dmg(ap, skill_level, current_hp, hp):
     global seraphine_note_counter
-    missing_health = hp - current_hp
-    missing_health_perc = round(missing_health / hp, 4)
     damage_amplifier = 0
     damage = 0
-    print(hp, current_hp, missing_health, missing_health_perc)
     seraphine_note_counter += 1
 
-    if missing_health_perc < 0.075:
-        damage_amplifier = 0
-    elif missing_health > 0.075 and missing_health_perc < 0.150:
-        damage_amplifier = 0.05
-    elif missing_health > 0.150 and missing_health_perc < 0.225:
-        damage_amplifier = 0.1
-    elif missing_health > 0.225 and missing_health_perc < 0.300:
-        damage_amplifier = 0.15
-    elif missing_health > 0.300 and missing_health_perc < 0.375:
-        damage_amplifier = 0.20
-    elif missing_health > 0.375 and missing_health_perc < 0.450:
-        damage_amplifier = 0.25
-    elif missing_health > 0.450 and missing_health_perc < 0.525:
-        damage_amplifier = 0.30
-    elif missing_health > 0.525 and missing_health_perc < 0.600:
-        damage_amplifier = 0.35
-    elif missing_health > 0.600 and missing_health_perc < 0.675:
-        damage_amplifier = 0.40
-    elif missing_health > 0.675 and missing_health_perc < 0.750:
-        damage_amplifier = 0.45
-    elif missing_health > 0.750:
-        damage_amplifier = 0.50
+    # if skill_level == 0:
+    #    damage = 0
+    # elif skill_level == 1:
+    #    damage = (55 + 0.45 * ap)
+    # elif skill_level == 2:
+    #    damage = (70 + 0.50 * ap)
+    # elif skill_level == 3:
+    #    damage = (85 + 0.55 * ap)
+    # elif skill_level == 4:
+    #    damage = (100 + 0.60 * ap)
+    # elif skill_level == 5:
+    #    damage = (115 + 0.65 * ap)
+
+    # current_hp -= damage
+    missing_health = round(hp - current_hp, 4)
+    missing_health_perc = round(missing_health / hp, 6)
+    print(damage, hp, current_hp, missing_health, missing_health_perc)
+    x = 0.0003
+    y = 0.0002
+    for i in range(0, 2501):
+
+        if missing_health_perc < x:
+            damage_amplifier = 0
+            break
+        elif missing_health_perc > x and missing_health_perc < (x + 0.0003):
+            damage_amplifier = y
+            break
+        x = round(x + 0.0003, 5)
+        y = round(y + 0.0002, 5)
+
+    # if missing_health_perc < 0.075:
+    #     damage_amplifier = 0
+    # elif missing_health > 0.015 and missing_health_perc < 0.030:
+    #     damage_amplifier = 0.01
+    # elif missing_health > 0.030 and missing_health_perc < 0.045:
+    #     damage_amplifier = 0.02
+    # elif missing_health > 0.045 and missing_health_perc < 0.060:
+    #     damage_amplifier = 0.03
+    # elif missing_health > 0.060 and missing_health_perc < 0.075:
+    #     damage_amplifier = 0.04
+    # elif missing_health > 0.075 and missing_health_perc < 0.090:
+    #     damage_amplifier = 0.05
+    # elif missing_health > 0.090 and missing_health_perc < 0.105:
+    #     damage_amplifier = 0.06
+    # elif missing_health > 0.105 and missing_health_perc < 0.120:
+    #     damage_amplifier = 0.07
+    # elif missing_health > 0.120 and missing_health_perc < 0.135:
+    #     damage_amplifier = 0.08
+    # elif missing_health > 0.135 and missing_health_perc < 0.150:
+    #     damage_amplifier = 0.09
+    # elif missing_health > 0.150 and missing_health_perc < 0.165:
+    #     damage_amplifier = 0.10
+    # elif missing_health > 0.165 and missing_health_perc < 0.180:
+    #     damage_amplifier = 0.1
+    # elif missing_health > 0.180 and missing_health_perc < 0.195:
+    #     damage_amplifier = 0.15
+    # elif missing_health > 0.300 and missing_health_perc < 0.375:
+    #     damage_amplifier = 0.20
+    # elif missing_health > 0.375 and missing_health_perc < 0.450:
+    #     damage_amplifier = 0.25
+    # elif missing_health > 0.450 and missing_health_perc < 0.525:
+    #     damage_amplifier = 0.30
+    # elif missing_health > 0.525 and missing_health_perc < 0.600:
+    #     damage_amplifier = 0.35
+    # elif missing_health > 0.600 and missing_health_perc < 0.675:
+    #     damage_amplifier = 0.40
+    # elif missing_health > 0.675 and missing_health_perc < 0.750:
+    #     damage_amplifier = 0.45
+    # elif missing_health > 0.750:
+    #     damage_amplifier = 0.50
 
     print(damage_amplifier)
 
