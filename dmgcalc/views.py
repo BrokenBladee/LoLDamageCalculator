@@ -105,22 +105,50 @@ def calculation_of_stats_with_level_user_input_based_on_base_stats():
                                             calc_crit_damage=champion_crit_damage, calc_bonus_attack_speed=champion_bonus_attack_speed)
 
 
+user_input_dict = {}
+champion_stats_based_on_level_dict = {}
+champion_name = ""
+champion_level = 0
+item_name_one = item_name_two = item_name_three = item_name_four = item_name_five = item_name_six = ""
+ability_q_level = ability_w_level = ability_e_level = ability_r_level = champion_base_hp = bonus_champion_hp = champion_hp = champion_base_hp_regen \
+    = champion_hp_regen = champion_base_mana = bonus_champion_mana = champion_mana = champion_base_mana_regen = champion_mana_regen \
+    = champion_base_armor = bonus_champion_armor = champion_armor = champion_base_mr = bonus_champion_mr = champion_mr = champion_base_attack_damage \
+    = bonus_champion_attack_damage = champion_attack_damage = champion_base_attack_speed = champion_attack_speed_ratio = champion_bonus_attack_speed \
+    = champion_attack_speed = champion_crit_damage = champion_crit_chance = champion_armor_pen_percentage = champion_armor_pen_flat \
+    = champion_ability_power = champion_ability_haste = champion_magic_pen_percentage = champion_magic_pen_flat = champion_movement_speed \
+    = champion_attack_speed_windup = champion_life_steal = champion_physical_vamp = champion_omnivamp = champion_gold_generation \
+    = champion_heal_and_shield_power = champion_tenacity = champion_slow_resistance = chosen_item = 0
+has_mythic = has_steraks_gage = has_rabadons_deathcap = has_demonic_embrace = has_titanic_hydra = False
+
+dummy_hp = dummy_armor = dummy_mr = 0
+
+
 def calculation_of_stats_with_user_input_based_on_items_and_level_stats():
+    global user_input_dict, champion_stats_based_on_level_dict, champion_name, champion_level, item_name_one, item_name_two, item_name_three, \
+        item_name_four, item_name_five, item_name_six, ability_q_level, ability_w_level, ability_e_level, ability_r_level, champion_base_hp, \
+        bonus_champion_hp, champion_hp, champion_base_hp_regen, champion_hp_regen, champion_base_mana, bonus_champion_mana, champion_mana, \
+        champion_base_mana_regen, champion_mana_regen, champion_base_armor, bonus_champion_armor, champion_armor, champion_base_mr, \
+        bonus_champion_mr, champion_mr, champion_base_attack_damage, bonus_champion_attack_damage, champion_attack_damage, \
+        champion_base_attack_speed, champion_attack_speed_ratio, champion_bonus_attack_speed, champion_attack_speed, champion_crit_damage, \
+        champion_crit_chance, champion_armor_pen_percentage, champion_armor_pen_flat, champion_ability_power, champion_ability_haste, \
+        champion_magic_pen_percentage, champion_magic_pen_flat, champion_movement_speed, champion_attack_speed_windup, champion_life_steal, \
+        champion_physical_vamp, champion_omnivamp, champion_gold_generation, champion_heal_and_shield_power, champion_tenacity, \
+        champion_slow_resistance, chosen_item, has_mythic, has_steraks_gage, has_rabadons_deathcap, has_demonic_embrace, has_titanic_hydra
+
     user_input_id = UserInput.objects.values('id').last().get('id')
     user_input_dict = UserInput.objects.filter(id=user_input_id).values().first()
-
     champion_stats_based_on_level_id = CalculatedStatsWithLevel.objects.values('id').last().get('id')
     champion_stats_based_on_level_dict = CalculatedStatsWithLevel.objects.filter(id=champion_stats_based_on_level_id).values().first()
 
     champion_name = champion_stats_based_on_level_dict.get('champion_name')
     champion_level = champion_stats_based_on_level_dict.get('level')
 
-    item_name_one = ""
-    item_name_two = ""
-    item_name_three = ""
-    item_name_four = ""
-    item_name_five = ""
-    item_name_six = ""
+    # item_name_one = ""
+    # item_name_two = ""
+    # item_name_three = ""
+    # item_name_four = ""
+    # item_name_five = ""
+    # item_name_six = ""
 
     ability_q_level = user_input_dict.get('ability_q_level_index')
     ability_w_level = user_input_dict.get('ability_w_level_index')
@@ -181,6 +209,11 @@ def calculation_of_stats_with_user_input_based_on_items_and_level_stats():
     champion_slow_resistance = 0
 
     #
+
+    mythic_armor_pen_perc = 0
+    mythic_magic_pen_perc = 0
+    mythic_tenacity = 0
+    mythic_slow_resist = 0
 
     chosen_item = None
     has_mythic = False
@@ -345,11 +378,10 @@ def calculation_of_stats_with_user_input_based_on_items_and_level_stats():
                     item_mythic_attack_speed = chosen_item.get('mythic_stat_attack_speed')
                     champion_bonus_attack_speed += item_mythic_attack_speed
                     item_mythic_armor_pen_percentage = chosen_item.get('mythic_stat_armor_pen_percentage')
-                    item_mythic_armor_pen_percentage = round(1 - item_mythic_armor_pen_percentage, 4)
-                    if champion_armor_pen_percentage == 0:
-                        champion_armor_pen_percentage = item_mythic_armor_pen_percentage
+                    if mythic_armor_pen_perc == 0:
+                        mythic_armor_pen_perc = item_mythic_armor_pen_percentage
                     else:
-                        champion_armor_pen_percentage *= item_mythic_armor_pen_percentage
+                        mythic_armor_pen_perc += item_mythic_armor_pen_percentage
                     item_mythic_armor_pen_flat = chosen_item.get('mythic_stat_armor_pen_flat')
                     champion_armor_pen_flat += item_mythic_armor_pen_flat
 
@@ -358,11 +390,10 @@ def calculation_of_stats_with_user_input_based_on_items_and_level_stats():
                     item_mythic_ability_haste = chosen_item.get('mythic_stat_ability_haste')
                     champion_ability_haste += item_mythic_ability_haste
                     item_mythic_magic_pen_percentage = chosen_item.get('mythic_stat_magic_pen_percentage')
-                    item_mythic_magic_pen_percentage = round(1 - item_mythic_magic_pen_percentage, 4)
-                    if champion_magic_pen_percentage == 0:
-                        champion_magic_pen_percentage = item_mythic_magic_pen_percentage
+                    if mythic_magic_pen_perc == 0:
+                        mythic_magic_pen_perc = item_mythic_magic_pen_percentage
                     else:
-                        champion_magic_pen_percentage *= item_mythic_magic_pen_percentage
+                        mythic_magic_pen_perc += item_mythic_magic_pen_percentage
                     item_mythic_magic_pen_flat = chosen_item.get('mythic_stat_magic_pen_flat')
                     champion_magic_pen_flat += item_mythic_magic_pen_flat
 
@@ -370,17 +401,15 @@ def calculation_of_stats_with_user_input_based_on_items_and_level_stats():
                     item_mythic_movement_speed_percentage = chosen_item.get('mythic_stat_movement_speed_percentage')
                     item_mythic_movement_speed_flat = chosen_item.get('mythic_stat_movement_speed_flat')
                     item_mythic_tenacity = chosen_item.get('mythic_stat_tenacity')
-                    item_mythic_tenacity = round(1 - item_mythic_tenacity, 4)
-                    if champion_tenacity == 0:
-                        champion_tenacity = item_mythic_tenacity
+                    if mythic_tenacity == 0:
+                        mythic_tenacity = item_mythic_tenacity
                     else:
-                        champion_tenacity *= item_mythic_tenacity
+                        mythic_tenacity += item_mythic_tenacity
                     item_mythic_slow_resistance = chosen_item.get('mythic_stat_slow_resistance')
-                    item_mythic_slow_resistance = round(1 - item_mythic_slow_resistance, 4)
-                    if champion_slow_resistance == 0:
-                        champion_slow_resistance = item_mythic_slow_resistance
+                    if mythic_slow_resist == 0:
+                        mythic_slow_resist = item_mythic_slow_resistance
                     else:
-                        champion_slow_resistance *= item_mythic_slow_resistance
+                        mythic_slow_resist += item_mythic_slow_resistance
 
                     item_mythic_omnivamp = chosen_item.get('mythic_stat_omnivamp')
                     champion_omnivamp += item_mythic_omnivamp
@@ -395,8 +424,8 @@ def calculation_of_stats_with_user_input_based_on_items_and_level_stats():
     if has_demonic_embrace:
         champion_ability_power += 0.02 * bonus_champion_hp
     if has_rabadons_deathcap:
-        champion_ability_power *= 0.35
-    # DARK SEAL/MEJAIS TECHNIALLY BUT NOT WORKING ANYWAYS
+        champion_ability_power *= 1.35
+    # DARK SEAL/MEJAI'S TECHNICALLY BUT NOT WORKING ANYWAYS
     champion_hp += bonus_champion_hp
     champion_hp += champion_base_hp
 
@@ -412,10 +441,23 @@ def calculation_of_stats_with_user_input_based_on_items_and_level_stats():
     champion_attack_damage += bonus_champion_attack_damage
     champion_attack_damage += champion_base_attack_damage
 
-    champion_armor_pen_percentage = 1 - champion_armor_pen_percentage
-    champion_magic_pen_percentage = 1 - champion_magic_pen_percentage
-    champion_tenacity = 1 - champion_tenacity
+    mythic_armor_pen_perc = round(1 - mythic_armor_pen_perc, 4)
+    champion_armor_pen_percentage *= mythic_armor_pen_perc
+    champion_armor_pen_percentage = round(1 - champion_armor_pen_percentage, 4)
+
+    mythic_magic_pen_perc = round(1 - mythic_magic_pen_perc, 4)
+    champion_magic_pen_percentage *= mythic_magic_pen_perc
+    champion_magic_pen_percentage = round(1 - champion_magic_pen_percentage, 4)
+
+    mythic_tenacity = round(1 - mythic_tenacity, 4)
+    champion_tenacity *= mythic_tenacity
+    champion_tenacity = round(1 - champion_tenacity, 4)
+
+    mythic_slow_resist = round(1 - mythic_slow_resist, 4)
+    champion_slow_resistance *= mythic_slow_resist
     champion_slow_resistance = 1 - champion_slow_resistance
+
+    champion_crit_chance = round(champion_crit_chance, 4)
     champion_attack_speed = attack_speed_calculation(champion_base_attack_speed, champion_attack_speed_ratio,
                                                      champion_bonus_attack_speed)
 
@@ -445,10 +487,28 @@ def calculation_of_stats_with_user_input_based_on_items_and_level_stats():
                                                          ability_r_level=ability_r_level)
 
 
-def calculation_of_damage():
-    user_input_id = UserInput.objects.values('id').last().get('id')
-    user_input_dict = UserInput.objects.filter(id=user_input_id).values().first()
+seraphine_note_counter = 0
+dummy_current_hp = 0
 
+
+def calculate_damage_based_on_mr_and_armor(damage, mr, armor):
+    damage_dealt = [0, '']
+    physical_damage_multiplier = 100 / (100 + armor)
+    magic_damage_multiplier = 100 / (100 + mr)
+
+    if damage[1] == 'physical':
+        damage_dealt[0] = damage[0] * physical_damage_multiplier
+        damage_dealt[1] = 'physical'
+
+    if damage[1] == 'magic':
+        damage_dealt[0] = damage[0] * magic_damage_multiplier
+        damage_dealt[1] = 'magic'
+
+    return damage_dealt
+
+
+def calculation_of_damage():
+    global dummy_hp, dummy_armor, dummy_mr, dummy_current_hp
     dummy_hp = user_input_dict.get('dummy_health_points')
     dummy_armor = user_input_dict.get('dummy_armor')
     dummy_mr = user_input_dict.get('dummy_magic_resistance')
@@ -457,8 +517,217 @@ def calculation_of_damage():
     magic_damage = 0
     true_damage = 0
 
+    abilities = [user_input_dict.get('ability1'), user_input_dict.get('ability2'), user_input_dict.get('ability3'), user_input_dict.get('ability4'),
+                 user_input_dict.get('ability5'), user_input_dict.get('ability6'), user_input_dict.get('ability7'), user_input_dict.get('ability8'),
+                 user_input_dict.get('ability9'), user_input_dict.get('ability10'), user_input_dict.get('ability11'),
+                 user_input_dict.get('ability12'), user_input_dict.get('ability13'), user_input_dict.get('ability14'),
+                 user_input_dict.get('ability14'), user_input_dict.get('ability15')]
+
+    abilities_damage_dealt = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    print(abilities)
+
+    dummy_current_hp = dummy_hp
+    for x in range(0, 16):
+        if abilities[x] > -1:
+            if abilities[x] == 0:
+                auto_attack_damage = calculate_damage_based_on_mr_and_armor(seraphine_auto_dmg(champion_attack_damage), dummy_mr, dummy_armor)
+                dummy_current_hp -= auto_attack_damage[0]
+                if auto_attack_damage[1] == 'physical':
+                    physical_damage += auto_attack_damage[0]
+                if auto_attack_damage[1] == 'magic':
+                    magic_damage += auto_attack_damage[0]
+                abilities_damage_dealt[x] = auto_attack_damage[0]
+            elif abilities[x] == 1:
+                passive_damage = calculate_damage_based_on_mr_and_armor(seraphine_passive_dmg(champion_ability_power, champion_level), dummy_mr,
+                                                                        dummy_armor)
+                dummy_current_hp -= passive_damage[0]
+                if passive_damage[1] == 'physical':
+                    physical_damage += passive_damage[0]
+                if passive_damage[1] == 'magic':
+                    magic_damage += passive_damage[0]
+                abilities_damage_dealt[x] = passive_damage[0]
+            elif abilities[x] == 2:
+                q_damage = calculate_damage_based_on_mr_and_armor(
+                    seraphine_q_dmg(champion_ability_power, ability_q_level, dummy_current_hp, dummy_hp),
+                    dummy_mr,
+                    dummy_armor)
+                dummy_current_hp -= q_damage[0]
+                if q_damage[1] == 'physical':
+                    physical_damage += q_damage[0]
+                if q_damage[1] == 'magic':
+                    magic_damage += q_damage[0]
+                abilities_damage_dealt[x] = q_damage[0]
+            elif abilities[x] == 3:
+                w_damage = 0
+                dummy_current_hp -= w_damage
+                physical_damage += w_damage
+                magic_damage += w_damage
+                abilities_damage_dealt[x] = w_damage
+            elif abilities[x] == 4:
+                e_damage = calculate_damage_based_on_mr_and_armor(seraphine_e_dmg(champion_ability_power, ability_e_level),
+                                                                  dummy_mr,
+                                                                  dummy_armor)
+                dummy_current_hp -= e_damage[0]
+                if e_damage[1] == 'physical':
+                    physical_damage += e_damage[0]
+                if e_damage[1] == 'magic':
+                    magic_damage += e_damage[0]
+                abilities_damage_dealt[x] = e_damage[0]
+            elif abilities[x] == 5:
+                r_damage = calculate_damage_based_on_mr_and_armor(seraphine_r_dmg(champion_ability_power, ability_r_level),
+                                                                  dummy_mr,
+                                                                  dummy_armor)
+                dummy_current_hp -= r_damage[0]
+                if r_damage[1] == 'physical':
+                    physical_damage += r_damage[0]
+                if r_damage[1] == 'magic':
+                    magic_damage += r_damage[0]
+                abilities_damage_dealt[x] = r_damage[0]
+            elif abilities[x] == 6:
+                pass
+            elif abilities[x] == 7:
+                pass
+            elif abilities[x] == 8:
+                pass
+            elif abilities[x] == 9:
+                pass
+            elif abilities[x] == 10:
+                pass
+            elif abilities[x] == 11:
+                pass
+
+    print(abilities_damage_dealt)
+
     DamageOutput.objects.create(dummy_hp=dummy_hp, dummy_armor=dummy_armor, dummy_mr=dummy_mr, physical_damage_dealt=physical_damage,
-                                magical_damage_dealt=magic_damage, true_damage_dealt=true_damage)
+                                magical_damage_dealt=magic_damage, true_damage_dealt=true_damage, ability1=abilities_damage_dealt[0],
+                                ability2=abilities_damage_dealt[1], ability3=abilities_damage_dealt[2], ability4=abilities_damage_dealt[3],
+                                ability5=abilities_damage_dealt[4], ability6=abilities_damage_dealt[5], ability7=abilities_damage_dealt[6],
+                                ability8=abilities_damage_dealt[7], ability9=abilities_damage_dealt[8], ability10=abilities_damage_dealt[9],
+                                ability11=abilities_damage_dealt[10], ability12=abilities_damage_dealt[11], ability13=abilities_damage_dealt[12],
+                                ability14=abilities_damage_dealt[13], ability15=abilities_damage_dealt[14])
+
+
+def seraphine_auto_dmg(ad):
+    return [ad, 'physical']
+
+
+def seraphine_passive_dmg(ap, level):
+    global seraphine_note_counter
+    damage = 0
+    if seraphine_note_counter > 4:
+        seraphine_note_counter = 4
+    if level < 6:
+        # level 1-5 4 dmg
+        damage = (4 + ap * 0.07) * seraphine_note_counter
+        pass
+    elif level < 11:
+        # level 5-10 8 dmg
+        damage = (8 + ap * 0.07) * seraphine_note_counter
+        pass
+    elif level < 16:
+        # level 11-15 14 dmg
+        damage = (14 + ap * 0.07) * seraphine_note_counter
+        pass
+    elif level < 19:
+        # level 16-18 24 dmg
+        damage = (24 + ap * 0.07) * seraphine_note_counter
+        pass
+    seraphine_note_counter = 0
+    return [damage, 'magic']
+
+
+def seraphine_q_dmg(ap, skill_level, current_hp, hp):
+    global seraphine_note_counter
+    missing_health = hp - current_hp
+    missing_health_perc = round(missing_health / hp, 4)
+    damage_amplifier = 0
+    damage = 0
+    print(hp, current_hp, missing_health, missing_health_perc)
+    seraphine_note_counter += 1
+
+    if missing_health_perc < 0.075:
+        damage_amplifier = 0
+    elif missing_health > 0.075 and missing_health_perc < 0.150:
+        damage_amplifier = 0.05
+    elif missing_health > 0.150 and missing_health_perc < 0.225:
+        damage_amplifier = 0.1
+    elif missing_health > 0.225 and missing_health_perc < 0.300:
+        damage_amplifier = 0.15
+    elif missing_health > 0.300 and missing_health_perc < 0.375:
+        damage_amplifier = 0.20
+    elif missing_health > 0.375 and missing_health_perc < 0.450:
+        damage_amplifier = 0.25
+    elif missing_health > 0.450 and missing_health_perc < 0.525:
+        damage_amplifier = 0.30
+    elif missing_health > 0.525 and missing_health_perc < 0.600:
+        damage_amplifier = 0.35
+    elif missing_health > 0.600 and missing_health_perc < 0.675:
+        damage_amplifier = 0.40
+    elif missing_health > 0.675 and missing_health_perc < 0.750:
+        damage_amplifier = 0.45
+    elif missing_health > 0.750:
+        damage_amplifier = 0.50
+
+    print(damage_amplifier)
+
+    if skill_level == 0:
+        damage = 0
+    elif skill_level == 1:
+        damage = (55 + 0.45 * ap) + ((55 + 0.45 * ap) * damage_amplifier)
+    elif skill_level == 2:
+        damage = (70 + 0.50 * ap) + ((70 + 0.50 * ap) * damage_amplifier)
+    elif skill_level == 3:
+        damage = (85 + 0.55 * ap) + ((85 + 0.55 * ap) * damage_amplifier)
+    elif skill_level == 4:
+        damage = (100 + 0.60 * ap) + ((100 + 0.60 * ap) * damage_amplifier)
+    elif skill_level == 5:
+        damage = (115 + 0.65 * ap) + ((115 + 0.65 * ap) * damage_amplifier)
+
+    print(damage)
+    return [damage, 'magic']
+
+
+def seraphine_w_dmg():
+    global seraphine_note_counter
+    seraphine_note_counter += 1
+    return 0
+
+
+def seraphine_e_dmg(ap, skill_level):
+    global seraphine_note_counter
+    seraphine_note_counter += 1
+    damage = 0
+    if skill_level == 0:
+        damage = 0
+    elif skill_level == 1:
+        damage = (60 + 0.35 * ap)
+    elif skill_level == 2:
+        damage = (80 + 0.35 * ap)
+    elif skill_level == 3:
+        damage = (100 + 0.35 * ap)
+    elif skill_level == 4:
+        damage = (120 + 0.35 * ap)
+    elif skill_level == 5:
+        damage = (140 + 0.35 * ap)
+
+    return [damage, 'magic']
+
+
+def seraphine_r_dmg(ap, skill_level):
+    global seraphine_note_counter
+    seraphine_note_counter += 1
+    damage = 0
+    if skill_level == 0:
+        damage = 0
+    elif skill_level == 1:
+        damage = (150 + 0.60 * ap)
+    elif skill_level == 2:
+        damage = (200 + 0.60 * ap)
+    elif skill_level == 3:
+        damage = (250 + 0.60 * ap)
+
+    return [damage, 'magic']
 
 
 def standard_stats_calculation_based_on_level(base_stat, growth_stat, level):

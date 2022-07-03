@@ -266,7 +266,7 @@
         }
 
         .list-of-abilities {
-            font-size: 4rem;
+            font-size: 2rem;
             align-self: center;
             justify-self: center;
             margin: 2.5rem 0 0 0;
@@ -275,15 +275,15 @@
         .list-of-abilities li {
             background: azure;
             padding: 0.3rem;
-            border: black 0.1rem solid;
-            box-shadow: 0 0.8rem 1.6rem 0 rgba(0, 0, 0, 0.2);
+            border: none;
+
 
         }
 
 
         .ability-buttons {
             background-color: #e282fe;
-            font-size: 3rem;
+            font-size: 2rem;
             border: none;
             box-shadow: 0 0.8rem 1.6rem 0 rgba(0, 0, 0, 0.2);
             cursor: pointer;
@@ -356,7 +356,7 @@
             cursor: pointer;
             box-shadow: 0 0.8rem 1.6rem 0 rgba(0, 0, 0, 0.2);
             font-size: 3rem;
-            margin: 10rem 10rem 10rem 35rem;
+            margin: 5rem 5rem 5rem 0rem;
         }
 
         .calc-button:hover, .calc-button:focus {
@@ -389,7 +389,7 @@
         </div>
         <div class="items">
             <div class="dropdown">
-                <button onclick="dropdownItems(1)" class="item-buttons">1</button>
+                <button onclick="dropdownItems(1)" class="item-buttons">Item 1</button>
                 <div id="dropdownItemList-1" class="dropdown-content-item">
                     {% for item in all_items %}
                         <button onclick="chosenItem(1,{{ forloop.counter0 }})">{{ item.item_name }}</button>
@@ -397,7 +397,7 @@
                 </div>
             </div>
             <div class="dropdown">
-                <button onclick="dropdownItems(2)" class="item-buttons">2</button>
+                <button onclick="dropdownItems(2)" class="item-buttons">Item 2</button>
                 <div id="dropdownItemList-2" class="dropdown-content-item">
                     {% for item in all_items %}
                         <button onclick="chosenItem(2,{{ forloop.counter0 }})">{{ item.item_name }}</button>
@@ -405,7 +405,7 @@
                 </div>
             </div>
             <div class="dropdown">
-                <button onclick="dropdownItems(3)" class="item-buttons">3</button>
+                <button onclick="dropdownItems(3)" class="item-buttons">Item 3</button>
                 <div id="dropdownItemList-3" class="dropdown-content-item">
                     {% for item in all_items %}
                         <button onclick="chosenItem(3,{{ forloop.counter0 }})">{{ item.item_name }}</button>
@@ -413,7 +413,7 @@
                 </div>
             </div>
             <div class="dropdown">
-                <button onclick="dropdownItems(4)" class="item-buttons">4</button>
+                <button onclick="dropdownItems(4)" class="item-buttons">Item 4</button>
                 <div id="dropdownItemList-4" class="dropdown-content-item">
                     {% for item in all_items %}
                         <button onclick="chosenItem(4,{{ forloop.counter0 }})">{{ item.item_name }}</button>
@@ -421,7 +421,7 @@
                 </div>
             </div>
             <div class="dropdown">
-                <button onclick="dropdownItems(5)" class="item-buttons">5</button>
+                <button onclick="dropdownItems(5)" class="item-buttons">Item 5</button>
                 <div id="dropdownItemList-5" class="dropdown-content-item">
                     {% for item in all_items %}
                         <button onclick="chosenItem(5,{{ forloop.counter0 }})">{{ item.item_name }}</button>
@@ -429,7 +429,7 @@
                 </div>
             </div>
             <div class="dropdown">
-                <button onclick="dropdownItems(6)" class="item-buttons">6</button>
+                <button onclick="dropdownItems(6)" class="item-buttons">Item 6</button>
                 <div id="dropdownItemList-6" class="dropdown-content-item">
                     {% for item in all_items %}
                         <button onclick="chosenItem(6,{{ forloop.counter0 }})">{{ item.item_name }}</button>
@@ -652,7 +652,6 @@
             </div>
         </div>
     </div>
-
     <div class="abilities-container">
         <h2>Choose Abilities to Use:</h2>
         <ol class="list-of-abilities">
@@ -770,13 +769,184 @@
                     </div>
                 </div>
             </li>
+            <li>
+                <div class="dropdown">
+                    <button onclick="dropdownAbilities(7)" class="ability-buttons">Ability7</button>
+                    <div id="dropdown-ability-list-7" class="dropdown-content-ability">
+                        <button onclick="chosenAbility(7,0)">AutoAttack</button>
+                        <button onclick="chosenAbility(7,1)">Passive</button>
+                        <button onclick="chosenAbility(7,2)">Q</button>
+                        <button onclick="chosenAbility(7,3)">W</button>
+                        <button onclick="chosenAbility(7,4)">E</button>
+                        <button onclick="chosenAbility(7,5)">R</button>
+                        <button onclick="chosenAbility(7,6)">ItemActive1</button>
+                        <button onclick="chosenAbility(7,7)">ItemActive2</button>
+                        <button onclick="chosenAbility(7,8)">ItemActive3</button>
+                        <button onclick="chosenAbility(7,9)">ItemActive4</button>
+                        <button onclick="chosenAbility(7,10)">ItemActive5</button>
+                        <button onclick="chosenAbility(7,11)">ItemActive6</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button onclick="dropdownAbilities(8)" class="ability-buttons">Ability8</button>
+                    <div id="dropdown-ability-list-8" class="dropdown-content-ability">
+                        <button onclick="chosenAbility(8,0)">AutoAttack</button>
+                        <button onclick="chosenAbility(8,1)">Passive</button>
+                        <button onclick="chosenAbility(8,2)">Q</button>
+                        <button onclick="chosenAbility(8,3)">W</button>
+                        <button onclick="chosenAbility(8,4)">E</button>
+                        <button onclick="chosenAbility(8,5)">R</button>
+                        <button onclick="chosenAbility(8,6)">ItemActive1</button>
+                        <button onclick="chosenAbility(8,7)">ItemActive2</button>
+                        <button onclick="chosenAbility(8,8)">ItemActive3</button>
+                        <button onclick="chosenAbility(8,9)">ItemActive4</button>
+                        <button onclick="chosenAbility(8,10)">ItemActive5</button>
+                        <button onclick="chosenAbility(8,11)">ItemActive6</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button onclick="dropdownAbilities(9)" class="ability-buttons">Ability9</button>
+                    <div id="dropdown-ability-list-9" class="dropdown-content-ability">
+                        <button onclick="chosenAbility(9,0)">AutoAttack</button>
+                        <button onclick="chosenAbility(9,1)">Passive</button>
+                        <button onclick="chosenAbility(9,2)">Q</button>
+                        <button onclick="chosenAbility(9,3)">W</button>
+                        <button onclick="chosenAbility(9,4)">E</button>
+                        <button onclick="chosenAbility(9,5)">R</button>
+                        <button onclick="chosenAbility(9,6)">ItemActive1</button>
+                        <button onclick="chosenAbility(9,7)">ItemActive2</button>
+                        <button onclick="chosenAbility(9,8)">ItemActive3</button>
+                        <button onclick="chosenAbility(9,9)">ItemActive4</button>
+                        <button onclick="chosenAbility(9,10)">ItemActive5</button>
+                        <button onclick="chosenAbility(9,11)">ItemActive6</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button onclick="dropdownAbilities(10)" class="ability-buttons">Ability10
+                    </button>
+                    <div id="dropdown-ability-list-10" class="dropdown-content-ability">
+                        <button onclick="chosenAbility(10,0)">AutoAttack</button>
+                        <button onclick="chosenAbility(10,1)">Passive</button>
+                        <button onclick="chosenAbility(10,2)">Q</button>
+                        <button onclick="chosenAbility(10,3)">W</button>
+                        <button onclick="chosenAbility(10,4)">E</button>
+                        <button onclick="chosenAbility(10,5)">R</button>
+                        <button onclick="chosenAbility(10,6)">ItemActive1</button>
+                        <button onclick="chosenAbility(10,7)">ItemActive2</button>
+                        <button onclick="chosenAbility(10,8)">ItemActive3</button>
+                        <button onclick="chosenAbility(10,9)">ItemActive4</button>
+                        <button onclick="chosenAbility(10,10)">ItemActive5</button>
+                        <button onclick="chosenAbility(10,11)">ItemActive6</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button onclick="dropdownAbilities(11)" class="ability-buttons">Ability11
+                    </button>
+                    <div id="dropdown-ability-list-11" class="dropdown-content-ability">
+                        <button onclick="chosenAbility(11,0)">AutoAttack</button>
+                        <button onclick="chosenAbility(11,1)">Passive</button>
+                        <button onclick="chosenAbility(11,2)">Q</button>
+                        <button onclick="chosenAbility(11,3)">W</button>
+                        <button onclick="chosenAbility(11,4)">E</button>
+                        <button onclick="chosenAbility(11,5)">R</button>
+                        <button onclick="chosenAbility(11,6)">ItemActive1</button>
+                        <button onclick="chosenAbility(11,7)">ItemActive2</button>
+                        <button onclick="chosenAbility(11,8)">ItemActive3</button>
+                        <button onclick="chosenAbility(11,9)">ItemActive4</button>
+                        <button onclick="chosenAbility(11,10)">ItemActive5</button>
+                        <button onclick="chosenAbility(11,11)">ItemActive6</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button onclick="dropdownAbilities(12)" class="ability-buttons">Ability12
+                    </button>
+                    <div id="dropdown-ability-list-12" class="dropdown-content-ability">
+                        <button onclick="chosenAbility(12,0)">AutoAttack</button>
+                        <button onclick="chosenAbility(12,1)">Passive</button>
+                        <button onclick="chosenAbility(12,2)">Q</button>
+                        <button onclick="chosenAbility(12,3)">W</button>
+                        <button onclick="chosenAbility(12,4)">E</button>
+                        <button onclick="chosenAbility(12,5)">R</button>
+                        <button onclick="chosenAbility(12,6)">ItemActive1</button>
+                        <button onclick="chosenAbility(12,7)">ItemActive2</button>
+                        <button onclick="chosenAbility(12,8)">ItemActive3</button>
+                        <button onclick="chosenAbility(12,9)">ItemActive4</button>
+                        <button onclick="chosenAbility(12,10)">ItemActive5</button>
+                        <button onclick="chosenAbility(12,11)">ItemActive6</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button onclick="dropdownAbilities(13)" class="ability-buttons">Ability13
+                    </button>
+                    <div id="dropdown-ability-list-13" class="dropdown-content-ability">
+                        <button onclick="chosenAbility(13,0)">AutoAttack</button>
+                        <button onclick="chosenAbility(13,1)">Passive</button>
+                        <button onclick="chosenAbility(13,2)">Q</button>
+                        <button onclick="chosenAbility(13,3)">W</button>
+                        <button onclick="chosenAbility(13,4)">E</button>
+                        <button onclick="chosenAbility(13,5)">R</button>
+                        <button onclick="chosenAbility(13,6)">ItemActive1</button>
+                        <button onclick="chosenAbility(13,7)">ItemActive2</button>
+                        <button onclick="chosenAbility(13,8)">ItemActive3</button>
+                        <button onclick="chosenAbility(13,9)">ItemActive4</button>
+                        <button onclick="chosenAbility(13,10)">ItemActive5</button>
+                        <button onclick="chosenAbility(13,11)">ItemActive6</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button onclick="dropdownAbilities(14)" class="ability-buttons">Ability14
+                    </button>
+                    <div id="dropdown-ability-list-14" class="dropdown-content-ability">
+                        <button onclick="chosenAbility(14,0)">AutoAttack</button>
+                        <button onclick="chosenAbility(14,1)">Passive</button>
+                        <button onclick="chosenAbility(14,2)">Q</button>
+                        <button onclick="chosenAbility(14,3)">W</button>
+                        <button onclick="chosenAbility(14,4)">E</button>
+                        <button onclick="chosenAbility(14,5)">R</button>
+                        <button onclick="chosenAbility(14,6)">ItemActive1</button>
+                        <button onclick="chosenAbility(14,7)">ItemActive2</button>
+                        <button onclick="chosenAbility(14,8)">ItemActive3</button>
+                        <button onclick="chosenAbility(14,9)">ItemActive4</button>
+                        <button onclick="chosenAbility(14,10)">ItemActive5</button>
+                        <button onclick="chosenAbility(14,11)">ItemActive6</button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button onclick="dropdownAbilities(15)" class="ability-buttons">Ability15
+                    </button>
+                    <div id="dropdown-ability-list-15" class="dropdown-content-ability">
+                        <button onclick="chosenAbility(15,0)">AutoAttack</button>
+                        <button onclick="chosenAbility(15,1)">Passive</button>
+                        <button onclick="chosenAbility(15,2)">Q</button>
+                        <button onclick="chosenAbility(15,3)">W</button>
+                        <button onclick="chosenAbility(15,4)">E</button>
+                        <button onclick="chosenAbility(15,5)">R</button>
+                        <button onclick="chosenAbility(15,6)">ItemActive1</button>
+                        <button onclick="chosenAbility(15,7)">ItemActive2</button>
+                        <button onclick="chosenAbility(15,8)">ItemActive3</button>
+                        <button onclick="chosenAbility(15,9)">ItemActive4</button>
+                        <button onclick="chosenAbility(15,10)">ItemActive5</button>
+                        <button onclick="chosenAbility(15,11)">ItemActive6</button>
+                    </div>
+                </div>
+            </li>
         </ol>
-        <button onclick="submitToCalc()" class="calc-button">
-            Calculate
-        </button>
-        <button onclick="window.location.reload()" class="calc-button">
-            reload
-        </button>
     </div>
 
     <div class="dummy-container">
@@ -784,7 +954,7 @@
             <div class="dummy-input">
                 <label for="input-for-dummy-HP">Health</label><input type="number"
                                                                      id="input-for-dummy-HP"
-                                                                     value="0">
+                                                                     value="100">
                 <p>{{ all_damage.0.dummy_hp }}</p>
             </div>
             <div class="dummy-input">
@@ -804,6 +974,12 @@
             <p>Magical Damage {{ all_damage.0.magical_damage_dealt }}</p>
             <p>True Damage {{ all_damage.0.true_damage_dealt }}</p>
         </div>
+        <button onclick="submitToCalc()" class="calc-button">
+            Calculate
+        </button>
+        <button onclick="window.location.reload()" class="calc-button">
+            Reload
+        </button>
     </div>
 
 
@@ -889,6 +1065,24 @@
             document.getElementById("dropdown-ability-list-5").classList.toggle("show");
         } else if (abilitiesDropdownmenu === 6) {
             document.getElementById("dropdown-ability-list-6").classList.toggle("show");
+        } else if (abilitiesDropdownmenu === 7) {
+            document.getElementById("dropdown-ability-list-7").classList.toggle("show");
+        } else if (abilitiesDropdownmenu === 8) {
+            document.getElementById("dropdown-ability-list-8").classList.toggle("show");
+        } else if (abilitiesDropdownmenu === 9) {
+            document.getElementById("dropdown-ability-list-9").classList.toggle("show");
+        } else if (abilitiesDropdownmenu === 10) {
+            document.getElementById("dropdown-ability-list-10").classList.toggle("show");
+        } else if (abilitiesDropdownmenu === 11) {
+            document.getElementById("dropdown-ability-list-11").classList.toggle("show");
+        } else if (abilitiesDropdownmenu === 12) {
+            document.getElementById("dropdown-ability-list-12").classList.toggle("show");
+        } else if (abilitiesDropdownmenu === 13) {
+            document.getElementById("dropdown-ability-list-13").classList.toggle("show");
+        } else if (abilitiesDropdownmenu === 14) {
+            document.getElementById("dropdown-ability-list-14").classList.toggle("show");
+        } else if (abilitiesDropdownmenu === 15) {
+            document.getElementById("dropdown-ability-list-15").classList.toggle("show");
         }
     }
 
@@ -997,7 +1191,7 @@
     }
 
     function chosenAbility(dropdownButtonNumber, abilityNumber) {
-        for (let b = 1; b <= 6; b++) {
+        for (let b = 1; b <= 15; b++) {
             if (b === dropdownButtonNumber) {
                 for (let i = 0; i <= 11; i++) {
                     if (abilityNumber === i) {
@@ -1160,7 +1354,6 @@
 
         userInput.delete("csrfmiddlewaretoken");
     }
-
 
 
     window.onclick = function (event) {
