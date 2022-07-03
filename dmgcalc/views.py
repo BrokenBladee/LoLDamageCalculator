@@ -667,11 +667,12 @@ def seraphine_q_dmg(ap, skill_level, current_hp, hp):
     x = 0.0003
     y = 0.0002
     for i in range(0, 2501):
-
-        if missing_health_perc < x:
+        print(x)
+        if missing_health_perc < 0.0003:
+            print(x, missing_health_perc)
             damage_amplifier = 0
             break
-        elif missing_health_perc > x and missing_health_perc < (x + 0.0003):
+        elif missing_health_perc > x and missing_health_perc < (x + 0.0003) or missing_health_perc == x:
             damage_amplifier = y
             break
         x = round(x + 0.0003, 5)
