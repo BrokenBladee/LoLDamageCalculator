@@ -537,7 +537,7 @@ def calculation_of_damage():
                     physical_damage += auto_attack_damage[0]
                 if auto_attack_damage[1] == 'magic':
                     magic_damage += auto_attack_damage[0]
-                abilities_damage_dealt[x] = auto_attack_damage[0]
+                abilities_damage_dealt[x] = round(auto_attack_damage[0], 2)
             elif abilities[x] == 1:
                 passive_damage = calculate_damage_based_on_mr_and_armor(seraphine_passive_dmg(champion_ability_power, champion_level), dummy_mr,
                                                                         dummy_armor)
@@ -546,7 +546,7 @@ def calculation_of_damage():
                     physical_damage += passive_damage[0]
                 if passive_damage[1] == 'magic':
                     magic_damage += passive_damage[0]
-                abilities_damage_dealt[x] = passive_damage[0]
+                abilities_damage_dealt[x] = round(passive_damage[0], 2)
             elif abilities[x] == 2:
                 q_damage = calculate_damage_based_on_mr_and_armor(
                     seraphine_q_dmg(champion_ability_power, ability_q_level, dummy_current_hp, dummy_hp),
@@ -557,7 +557,7 @@ def calculation_of_damage():
                     physical_damage += q_damage[0]
                 if q_damage[1] == 'magic':
                     magic_damage += q_damage[0]
-                abilities_damage_dealt[x] = q_damage[0]
+                abilities_damage_dealt[x] = round(q_damage[0], 2)
             elif abilities[x] == 3:
                 w_damage = 0
                 dummy_current_hp -= w_damage
@@ -573,7 +573,7 @@ def calculation_of_damage():
                     physical_damage += e_damage[0]
                 if e_damage[1] == 'magic':
                     magic_damage += e_damage[0]
-                abilities_damage_dealt[x] = e_damage[0]
+                abilities_damage_dealt[x] = round(e_damage[0], 2)
             elif abilities[x] == 5:
                 r_damage = calculate_damage_based_on_mr_and_armor(seraphine_r_dmg(champion_ability_power, ability_r_level),
                                                                   dummy_mr,
@@ -583,7 +583,7 @@ def calculation_of_damage():
                     physical_damage += r_damage[0]
                 if r_damage[1] == 'magic':
                     magic_damage += r_damage[0]
-                abilities_damage_dealt[x] = r_damage[0]
+                abilities_damage_dealt[x] = round(r_damage[0], 2)
             elif abilities[x] == 6:
                 pass
             elif abilities[x] == 7:
@@ -599,9 +599,9 @@ def calculation_of_damage():
 
     print(abilities_damage_dealt)
 
-    physical_damage = round(physical_damage)
-    magic_damage = round(magic_damage)
-    true_damage = round(true_damage)
+    physical_damage = round(physical_damage, 2)
+    magic_damage = round(magic_damage, 2)
+    true_damage = round(true_damage, 2)
 
     DamageOutput.objects.create(dummy_hp=dummy_hp, dummy_armor=dummy_armor, dummy_mr=dummy_mr, physical_damage_dealt=physical_damage,
                                 magical_damage_dealt=magic_damage, true_damage_dealt=true_damage, ability1=abilities_damage_dealt[0],
@@ -667,9 +667,7 @@ def seraphine_q_dmg(ap, skill_level, current_hp, hp):
     x = 0.0003
     y = 0.0002
     for i in range(0, 2501):
-        print(x)
         if missing_health_perc < 0.0003:
-            print(x, missing_health_perc)
             damage_amplifier = 0
             break
         elif missing_health_perc > x and missing_health_perc < (x + 0.0003) or missing_health_perc == x:
